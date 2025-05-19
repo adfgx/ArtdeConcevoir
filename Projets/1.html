@@ -8,7 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>html { scroll-behavior: smooth; }</style>
 </head>
-
 <body class="bg-white text-gray-800 scroll-smooth">
 
   <!-- Header -->
@@ -29,49 +28,27 @@
   </section>
 
   <!-- Project Details -->
-  <section id="projets" class="py-16 bg-white">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Nos Projets</h2>
-
-    <!-- Filter Buttons -->
-    <div class="flex justify-center gap-4 mb-10">
-      <button onclick="filterProjects('all')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tous</button>
-      <button onclick="filterProjects('res')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Résidentiel</button>
-      <button onclick="filterProjects('com')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Commercial</button>
-      <button onclick="filterProjects('mixte')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Mixte</button>
+  <section class="py-12">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div data-aos="fade-right">
+          <h2 class="text-2xl font-bold mb-4">Détails du projet</h2>
+          <ul class="text-gray-700 space-y-2">
+            <li><strong>Lieu :</strong> Montréal, Québec</li>
+            <li><strong>Année :</strong> 2023</li>
+            <li><strong>Type :</strong> Résidentiel unifamilial</li>
+            <li><strong>Superficie :</strong> 180 m²</li>
+          </ul>
+        </div>
+        <div data-aos="fade-left">
+          <h2 class="text-2xl font-bold mb-4">Description</h2>
+          <p class="text-gray-600 leading-relaxed">
+            Ce projet visait la conception d’une résidence moderne en harmonie avec son environnement urbain. L’accent a été mis sur la lumière naturelle, les matériaux durables et une organisation spatiale efficace.
+          </p>
+        </div>
+      </div>
     </div>
-
-    <!-- Project Cards Grid -->
-    <div id="gallery" class="grid md:grid-cols-3 gap-6">
-      <!-- Card 1 -->
-      <a href="/Projets/1.html" class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <img src="https://via.placeholder.com/400x250" alt="Projet Résidentiel" class="w-full h-52 object-cover">
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 2 -->
-      <a href="projet-commercial.html" class="project-card com block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="100">
-        <img src="https://via.placeholder.com/400x250" alt="Projet Commercial" class="w-full h-52 object-cover">
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Bureau à Laval</h3>
-          <p class="text-sm text-gray-600">Commercial, 2022</p>
-        </div>
-      </a>
-
-      <!-- Card 3 -->
-      <a href="projet-mixte.html" class="project-card mixte block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="200">
-        <img src="https://via.placeholder.com/400x250" alt="Projet Mixte" class="w-full h-52 object-cover">
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Complexe à Québec</h3>
-          <p class="text-sm text-gray-600">Mixte, 2021</p>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
+  </section>
 
   <!-- Image Gallery -->
   <section class="py-12 bg-gray-50">
