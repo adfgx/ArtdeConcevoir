@@ -8,17 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>html { scroll-behavior: smooth; }</style>
 </head>
-    <script>
-  function filterProjects(category) {
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-      card.style.display =
-        category === 'all' || card.classList.contains(category)
-          ? 'block'
-          : 'none';
-    });
-  }
-</script>
 
 <body class="bg-white text-gray-800 scroll-smooth">
 

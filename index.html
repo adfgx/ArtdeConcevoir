@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Art de Concevoir</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+  function filterProjects(category) {
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => {
+      card.style.display =
+        category === 'all' || card.classList.contains(category)
+          ? 'block'
+          : 'none';
+    });
+  }
+</script>
+
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
