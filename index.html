@@ -6,7 +6,7 @@
   <title>Art de Concevoir</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-  function filterProjects(category) {
+    function filterProjects(category) {
     const cards = document.querySelectorAll('.project-card');
     cards.forEach(card => {
       card.style.display =
@@ -15,7 +15,27 @@
           : 'none';
     });
   }
+  </script>
+  
+  <script>
+  window.addEventListener('scroll', () => {
+    const sections = ['panel1', 'panel2', 'panel3'];
+    const threshold = window.innerHeight * 0.5;
+
+    sections.forEach((id, i) => {
+      const panel = document.getElementById(id);
+      const section = document.getElementById(`section${i + 1}`);
+      const rect = section.getBoundingClientRect();
+
+      if (rect.top < -threshold) {
+        panel.classList.add('fade-out');
+      } else {
+        panel.classList.remove('fade-out');
+      }
+    });
+  });
 </script>
+
 
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
