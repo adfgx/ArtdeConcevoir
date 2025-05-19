@@ -36,14 +36,51 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="bg-gray-100 py-20 text-center">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-4xl font-semibold mb-4" data-aos="fade-up">Concevoir avec passion et précision</h2>
-      <p class="text-gray-600 text-lg mb-6" data-aos="fade-up" data-aos-delay="200">Architecture résidentielle et commerciale au Québec</p>
-      <a href="#projets" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition" data-aos="fade-up" data-aos-delay="400">Voir nos projets</a>
+  <!-- Section 1: Hero Fullscreen Image -->
+<section class="relative h-screen bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('https://via.placeholder.com/1600x900');">
+  <div class="bg-black bg-opacity-60 w-full h-full absolute top-0 left-0"></div>
+  <div class="relative z-10 text-center px-6" data-aos="fade-up">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4">Concevoir avec passion et précision</h1>
+    <p class="text-lg md:text-xl">Architecture résidentielle et commerciale au Québec</p>
+  </div>
+</section>
+
+<!-- Transition Section: Background Image Fade -->
+<section class="relative h-screen bg-cover bg-center flex items-end text-white" style="background-image: url('https://via.placeholder.com/1600x900/222');">
+  <div class="bg-black bg-opacity-50 absolute inset-0"></div>
+  <div class="relative z-10 p-10 md:p-20 max-w-3xl" data-aos="fade-up">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Notre philosophie</h2>
+    <p class="text-lg leading-relaxed">
+      Nous croyons en une architecture qui reflète les besoins humains, la durabilité et la beauté fonctionnelle.
+    </p>
+  </div>
+</section>
+
+<!-- Section 3: About Us (Image Left, Text Right) -->
+<section class="bg-white py-20">
+  <div class="max-w-7xl mx-auto px-6 md:flex md:items-center md:gap-10">
+    <div class="md:w-1/2" data-aos="fade-right">
+      <img src="https://via.placeholder.com/600x400" alt="Notre Équipe" class="rounded shadow">
     </div>
-  </section>
+    <div class="md:w-1/2 mt-8 md:mt-0" data-aos="fade-left">
+      <h2 class="text-3xl font-bold mb-4">À propos de nous</h2>
+      <p class="text-gray-700 text-lg leading-relaxed">
+        Nous sommes un bureau de techniciens en architecture passionnés par la conception intelligente et l'exécution précise. Depuis 2015, nous réalisons des projets résidentiels et commerciaux à travers le Québec.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Transition Section 3 -->
+<section class="relative h-screen bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('https://via.placeholder.com/1600x900/555');">
+  <div class="bg-black bg-opacity-40 absolute inset-0"></div>
+  <div class="relative z-10 max-w-2xl text-center" data-aos="fade-up">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">L'architecture durable</h2>
+    <p class="text-lg leading-relaxed">
+      L'intégration de solutions écologiques et pérennes est au cœur de chaque projet que nous entreprenons.
+    </p>
+  </div>
+</section>
 
   <!-- Featured Projects -->
   <section id="projets" class="py-16 bg-white">
