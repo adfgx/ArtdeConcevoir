@@ -47,36 +47,48 @@
 
   <!-- Featured Projects -->
   <section id="projets" class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Nos Projets</h3>
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Project Card 1 -->
-        <div class="border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-          <img src="https://via.placeholder.com/400x250" alt="Projet 1" class="w-full h-52 object-cover">
-          <div class="p-4">
-            <h4 class="text-xl font-semibold">Projet Résidentiel</h4>
-            <p class="text-sm text-gray-600 mt-1">Montréal, 2023</p>
-          </div>
-        </div>
-        <!-- Project Card 2 -->
-        <div class="border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="100">
-          <img src="https://via.placeholder.com/400x250" alt="Projet 2" class="w-full h-52 object-cover">
-          <div class="p-4">
-            <h4 class="text-xl font-semibold">Projet Commercial</h4>
-            <p class="text-sm text-gray-600 mt-1">Laval, 2022</p>
-          </div>
-        </div>
-        <!-- Project Card 3 -->
-        <div class="border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="200">
-          <img src="https://via.placeholder.com/400x250" alt="Projet 3" class="w-full h-52 object-cover">
-          <div class="p-4">
-            <h4 class="text-xl font-semibold">Projet Mixte</h4>
-            <p class="text-sm text-gray-600 mt-1">Québec, 2021</p>
-          </div>
-        </div>
-      </div>
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Nos Projets</h2>
+
+    <!-- Filter Buttons -->
+    <div class="flex justify-center gap-4 mb-10">
+      <button onclick="filterProjects('all')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tous</button>
+      <button onclick="filterProjects('res')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Résidentiel</button>
+      <button onclick="filterProjects('com')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Commercial</button>
+      <button onclick="filterProjects('mixte')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Mixte</button>
     </div>
-  </section>
+
+    <!-- Project Cards Grid -->
+    <div id="gallery" class="grid md:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <a href="projet-residentiel.html" class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
+        <img src="https://via.placeholder.com/400x250" alt="Projet Résidentiel" class="w-full h-52 object-cover">
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
+          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="projet-commercial.html" class="project-card com block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="100">
+        <img src="https://via.placeholder.com/400x250" alt="Projet Commercial" class="w-full h-52 object-cover">
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">Bureau à Laval</h3>
+          <p class="text-sm text-gray-600">Commercial, 2022</p>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="projet-mixte.html" class="project-card mixte block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in" data-aos-delay="200">
+        <img src="https://via.placeholder.com/400x250" alt="Projet Mixte" class="w-full h-52 object-cover">
+        <div class="p-4">
+          <h3 class="text-xl font-semibold">Complexe à Québec</h3>
+          <p class="text-sm text-gray-600">Mixte, 2021</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
 
   <!-- About -->
   <section id="a-propos" class="bg-gray-50 py-16">
