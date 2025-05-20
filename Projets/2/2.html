@@ -3,450 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Art de Concevoir</title>
+  <title>Projet Résidentiel – Art de Concevoir</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-  <style>
-    body {
-      overscroll-behavior: none;
-      touch-action: manipulation;
-    }
-
-    html { 
-      scroll-behavior: smooth;
-      scroll-snap-type: y mandatory;
-    }
-
-    .scroll-section {
-      position: relative;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-      scroll-snap-align: start;
-    }
-
-    .scroll-panel {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform;
-    }
-
-    #panel1 { z-index: 30; }
-    #panel2 { z-index: 20; }
-    #panel3 { z-index: 10; }
-
-    .panel-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Smooth scroll behavior */
-    @media (prefers-reduced-motion: no-preference) {
-      html {
-        scroll-behavior: smooth;
-      }
-    }
-  </style>
+  <style>html { scroll-behavior: smooth; }</style>
 </head>
-<body class="bg-white text-gray-800">
+<body class="bg-white text-gray-800 scroll-smooth">
+
   <!-- Header -->
-  <header id="site-header" class="bg-white shadow-md fixed top-0 w-full z-50 transition-transform duration-300">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Art de Concevoir</h1>
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold">Art de Concevoir</a>
       <nav class="space-x-6 text-sm font-medium">
-        <a href="#" class="hover:text-blue-600">Accueil</a>
-        <a href="#projets" class="hover:text-blue-600">Projets</a>
-        <a href="#a-propos" class="hover:text-blue-600">À propos</a>
-        <a href="#contact" class="hover:text-blue-600">Contact</a>
+        <a href="index.html#projets" class="hover:text-blue-600">Retour aux projets</a>
       </nav>
     </div>
   </header>
 
-  <!-- Header behaviour -->
-  <script>
-  let lastScrollY = window.scrollY;
-  const header = document.getElementById('site-header');
-
-  window.addEventListener('scroll', () => {
-    if (!header) return;
-
-    const currentScrollY = window.scrollY;
-
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
-      // Scrolling down
-      header.style.transform = 'translateY(-100%)';
-    } else {
-      // Scrolling up
-      header.style.transform = 'translateY(0)';
-    }
-
-    lastScrollY = currentScrollY;
-  });
-  </script>
-
-  <!-- Scroll Section 1: Hero -->
-  <div class="scroll-section" id="section1">
-    <div id="panel1" class="scroll-panel">
-      <div class="panel-content bg-cover bg-center bg-no-repeat" 
-           style="background-image: url('Projets/1/images/16.9/1.jpg');">
-        <div class="bg-black bg-opacity-60 absolute inset-0"></div>
-        <div class="relative z-10 text-center px-6" data-aos="fade-up">
-          <h1 class="text-4xl md:text-6xl font-bold mb-4">Plans pour permis</h1>
-          <p class="text-lg md:text-xl">Éxecutions des plans pour demande de permis. Membre de l'OTPQ-21474. Technologue en Architecture.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll Section 2: Notre philosophie -->
-  <div class="scroll-section" id="section2">
-    <div id="panel2" class="scroll-panel">
-      <div class="panel-content bg-cover bg-center bg-no-repeat" 
-           style="background-image: url('Projets/32/images/16.9/1.jpg');">
-        <div class="bg-black bg-opacity-50 absolute inset-0"></div>
-        <div class="relative z-10 p-10 md:p-20 max-w-3xl ml-auto text-right" data-aos="fade-up">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">Notre Philosophie</h2>
-          <p class="text-lg leading-relaxed">
-            Random text
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll Section 3: Expertise -->
-  <div class="scroll-section" id="section3">
-    <div id="panel3" class="scroll-panel">
-      <div class="panel-content bg-cover bg-center bg-no-repeat" 
-           style="background-image: url('Projets/1/images/16.9/1.5.jpg');">
-        <div class="bg-black bg-opacity-50 absolute inset-0"></div>
-        <div class="relative z-10 p-10 md:p-20 max-w-3xl" data-aos="fade-up">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">Notre Expertise</h2>
-          <p class="text-lg leading-relaxed">
-            Diplômée en architecture, nous avons accumulé plus de 30 années d'expérience en tant que chefs de projets.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll animation script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const panels = [
-        { element: document.getElementById('panel1'), active: true },
-        { element: document.getElementById('panel2'), active: false },
-        { element: document.getElementById('panel3'), active: false }
-      ];
-
-      const sectionHeight = window.innerHeight;
-      let ticking = false;
-
-      function updatePanels(scrollPos) {
-        const panel1Pos = scrollPos / sectionHeight;
-        const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
-        const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
-
-        // Panel 1 transitions out when scrolling down
-        if (panel1Pos <= 0) {
-          panels[0].element.style.transform = 'translateY(0)';
-        } else {
-          panels[0].element.style.transform = `translateY(-${panel1Pos * 100}%)`;
-        }
-
-        // Panel 2 transitions in/out
-        if (panel2Pos <= 0) {
-          panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 100}%)`;
-        } else {
-          panels[1].element.style.transform = `translateY(-${panel2Pos * 100}%)`;
-        }
-
-        // Panel 3 transitions in
-        if (panel3Pos <= 0) {
-          panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
-        } else {
-          panels[2].element.style.transform = 'translateY(0)';
-        }
-      }
-
-      window.addEventListener('scroll', () => {
-        const scrollPos = window.scrollY;
-        
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            updatePanels(scrollPos);
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    });
-  </script>
-
-  <!-- Rest of your content (Projects, About, Contact sections) remains the same -->
-   <!-- Scroll Section 1: Hero -->
-<div class="scroll-section" style="height: calc(var(--vh, 1vh) * 100);" id="section1">
-  <div id="panel1" class="scroll-panel bg-cover bg-center bg-no-repeat flex items-center justify-center text-white" 
-  style="background-image: url('Projets/1/images/16.9/1.jpg');">
-    <div class="bg-black bg-opacity-60 absolute inset-0"></div>
-    <div class="relative z-10 text-center px-6" data-aos="fade-up">
-      <h1 class="text-4xl md:text-6xl font-bold mb-4">Plans pour permis</h1>
-      <p class="text-lg md:text-xl">Éxecutions des plans pour demande de permis. Membre de l'OTPQ-21474. Technologue en Architecture.</p>
-    </div>
-  </div>
-</div>
-
-<!-- Scroll Section 2: Notre philosophie -->
-<div class="scroll-section" style="height: calc(var(--vh, 1vh) * 100);" id="section2">
-  <div id="panel2" class="scroll-panel bg-cover bg-center bg-no-repeat flex items-end text-white">
-    <div class="bg-black bg-opacity-50 absolute inset-0"></div>
-    <div class="relative z-10 p-10 md:p-20 max-w-3xl ml-auto text-right" data-aos="fade-up">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">a</h2>
-      <p class="text-lg leading-relaxed">
-        Random text
-      </p>
-    </div>
-  </div>
-</div>
-
-<!-- Scroll Section 3: Expertise -->
-<div class="scroll-section" style="height: calc(var(--vh, 1vh) * 100);" id="section3">
-  <div id="panel3" class="scroll-panel bg-cover bg-center bg-no-repeat flex items-start text-white">
-    <div class="bg-black bg-opacity-50 absolute inset-0"></div>
-    <div class="relative z-10 p-10 md:p-20 max-w-3xl" data-aos="fade-up">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Notre Expertise</h2>
-      <p class="text-lg leading-relaxed">
-        Diplômée en architecture, nous avons accumulé plus de 30 années d'expérience en tant que chefs de projets. Au cours de nos différents mandats, nous avons acquis les connaissances suivantes;
-        Analyse de besoins de clients, de l’esquisse de projet au définitif;
-        L’application du code en vigueur, normes et règlements pour la construction et conception revit/Autocad;
-        Estimations et gérance de projets jusqu’à 2 millions;
-        Industriel, Institutionnel, commercial, résidentiel et condominium;
-        Faire le suivi de projet de la phase d’étude jusqu’à l’exécution;
-        Préparer des documents d'appel d’offres, et négociation du contrat.
-      </p>
-    </div>
-  </div>
-</div>
-      
-
-<!-- Transition Section 3 -->
-<section class="relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
-style="height: calc(var(--vh, 1vh) * 100); background-image: url('Projets/33/images/16.9/1.5.jpg');">
-  <div class="bg-black bg-opacity-40 absolute inset-0"></div>
-  <div class="relative z-10 max-w-2xl text-center" data-aos="fade-up">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4">Services</h2>
-    <p class="text-lg leading-relaxed">
-        Modelisation 3d, video, rendu, intérieur et extérieur
-        Plans de rénovation
-        Plans personnalisés
-        Plans d'amenagement extérieur/intérieur
-        Plans d'ajout (Garage, terrasse, escaliers, toit)
-        Plan de Construction de maison neuve et Isolée
-        Soumission gratuite, free estimate $0
-    </p>
-  </div>
-</section>
-
-  <!-- Featured Projects -->
-  <section id="projets" class="py-16 bg-white">
-  <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Nos Projets</h2>
-
-    <!-- Filter Buttons -->
-    <div class="flex justify-center gap-4 mb-10">
-      <button onclick="filterProjects('all')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tous</button>
-      <button onclick="filterProjects('res')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Résidentiel</button>
-      <button onclick="filterProjects('com')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Commercial</button>
-      <button onclick="filterProjects('mixte')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Mixte</button>
-    </div>
-
-    <!-- Project Cards Grid -->
-    <div id="gallery" class="grid md:grid-cols-3 gap-6">
-      <!-- Card 1 -->
-      <a href="Projets/1/1.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/1/images/16.9/1.jpg" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 5 -->
-      <a href="Projets/5/5.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/5/images/16.9/1.png" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 7 -->
-      <a href="Projets/7/7.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/7/images/16.9/1.png" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 12 -->
-      <a href="Projets/12/12.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/12/images/16.9/1.png" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 13 -->
-      <a href="Projets/13/13.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/13/images/16.9/1.png" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 21 -->
-      <a href="Projets/21/21.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/21/images/16.9/1.png" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 23 -->
-      <a href="Projets/23/23.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/23/images/16.9/1.jpg" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 24 -->
-      <a href="Projets/24/24.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/24/images/16.9/1.png" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 29 -->
-      <a href="Projets/29/29.html" 
-      class="project-card res block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/29/images/16.9/1.jpg" class="w-full h-full object-cover" alt="Projet Résidentiel" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 32 -->
-      <a href="Projets/32/32.html" 
-      class="project-card com block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/32/images/16.9/1.2.jpg" class="w-full h-full object-cover" alt="Projet Commercial" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-
-      <!-- Card 33 -->
-      <a href="Projets/33/33.html" 
-      class="project-card mixte block border rounded-xl overflow-hidden shadow hover:shadow-lg transition" data-aos="zoom-in">
-        <div class="aspect-video w-full overflow-hidden">
-        <img src="Projets/33/images/16.9/1.2.jpg" class="w-full h-full object-cover" alt="Projet Mixte" />
-        </div>
-        <div class="p-4">
-          <h3 class="text-xl font-semibold">Maison à Montréal</h3>
-          <p class="text-sm text-gray-600">Résidentiel, 2023</p>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-  <!-- About -->
-  <section id="a-propos" class="bg-gray-50 py-16">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-6" data-aos="fade-up">À propos de nous</h3>
-      <p class="text-gray-700 text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="150">
-        Nous sommes un bureau de techniciens en architecture passionnés par la conception intelligente et l'exécution précise. Depuis 2015, nous réalisons des projets résidentiels et commerciaux à travers le Québec.
-      </p>
+  <!-- Hero Image -->
+  <section class="h-64 bg-cover bg-center relative" style="background-image: url('https://via.placeholder.com/1200x500');">
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+      <h1 class="text-white text-4xl font-bold" data-aos="fade-in">Projet Résidentiel</h1>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="py-16 bg-white">
-    <div class="max-w-xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-6" data-aos="slide-up">Contact</h3>
-      <p class="mb-4 text-gray-600" data-aos="slide-up" data-aos-delay="100">Vous avez un projet? Parlons-en.</p>
-      <form action="https://formspree.io/f/yourformid" method="POST" class="space-y-4 text-left" data-aos="slide-up" data-aos-delay="200">
-        <input type="text" name="name" placeholder="Nom" required class="w-full border p-3 rounded-md">
-        <input type="email" name="email" placeholder="Courriel" required class="w-full border p-3 rounded-md">
-        <textarea name="message" rows="5" placeholder="Message" required class="w-full border p-3 rounded-md"></textarea>
-        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">Envoyer</button>
-      </form>
+  <!-- Project Details -->
+  <section class="py-12">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div data-aos="fade-right">
+          <h2 class="text-2xl font-bold mb-4">Détails du projet</h2>
+          <ul class="text-gray-700 space-y-2">
+            <li><strong>Lieu :</strong> Montréal, Québec</li>
+            <li><strong>Année :</strong> 2023</li>
+            <li><strong>Type :</strong> Résidentiel unifamilial</li>
+            <li><strong>Superficie :</strong> 180 m²</li>
+          </ul>
+        </div>
+        <div data-aos="fade-left">
+          <h2 class="text-2xl font-bold mb-4">Description</h2>
+          <p class="text-gray-600 leading-relaxed">
+            Ce projet visait la conception d’une résidence moderne en harmonie avec son environnement urbain. L’accent a été mis sur la lumière naturelle, les matériaux durables et une organisation spatiale efficace.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Gallery -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-6 text-center" data-aos="fade-up">Galerie du projet</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <img src="https://via.placeholder.com/400x300" alt="Vue 1" class="rounded shadow" data-aos="zoom-in">
+        <img src="https://via.placeholder.com/400x300" alt="Vue 2" class="rounded shadow" data-aos="zoom-in" data-aos-delay="100">
+        <img src="https://via.placeholder.com/400x300" alt="Vue 3" class="rounded shadow" data-aos="zoom-in" data-aos-delay="200">
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="bg-gray-100 py-6 text-center text-sm text-gray-500">
-    © 2025 Art de Concevoir. Tous droits réservés.
+    © 2025 Art de Concevoir
   </footer>
-  <!-- ... -->
 
-  <!-- AOS script -->
+  <!-- AOS -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: 'ease-in-out',
-    });
+    AOS.init({ duration: 800, once: true, easing: 'ease-in-out' });
   </script>
 </body>
 </html>
