@@ -373,6 +373,7 @@
     const totalPanelsHeight = sectionHeight * 3;
     let ticking = false;
     let isScrolling = false;
+    let lastScrollTime = 0;
 
     function updatePanels(scrollPos) {
       const panel1Pos = scrollPos / sectionHeight;
@@ -413,13 +414,31 @@
       if (isScrolling) return;
       
       const scrollPos = window.scrollY;
+      const now = Date.now();
+      const scrollSpeed = Math.abs(scrollPos - lastScrollY);
+      lastScrollY = scrollPos;
       
       // Only snap if we're in the first three sections
       if (scrollPos < totalPanelsHeight) {
-        const currentSection = Math.round(scrollPos / sectionHeight);
-        const targetPos = currentSection * sectionHeight;
+        const currentSection = Math.floor(scrollPos / sectionHeight);
+        const sectionProgress = (scrollPos % sectionHeight) / sectionHeight;
         
-        if (Math.abs(scrollPos - targetPos) > 5) {
+        // Only snap if:
+        // 1. We're near the top/bottom of a section (within 30%)
+        // 2. OR we're scrolling fast (user intent to move sections)
+        const shouldSnap = 
+          (sectionProgress < 0.3 && scrollPos < lastScrollY) ||  // scrolling up near top
+          (sectionProgress > 0.7 && scrollPos > lastScrollY) ||  // scrolling down near bottom
+          (scrollSpeed > 50 && now - lastScrollTime < 100);      // fast scroll
+        
+        if (shouldSnap) {
+          const targetPos = currentSection * sectionHeight;
+          
+          // If scrolling down near bottom of section, go to next section
+          if (sectionProgress > 0.7 && scrollPos > lastScrollY && currentSection < 2) {
+            targetPos = (currentSection + 1) * sectionHeight;
+          }
+          
           isScrolling = true;
           window.scrollTo({
             top: targetPos,
@@ -432,6 +451,7 @@
           }, 1000);
         }
       }
+      lastScrollTime = now;
     }
 
     window.addEventListener('scroll', () => {
@@ -440,7 +460,7 @@
       if (!ticking) {
         window.requestAnimationFrame(() => {
           updatePanels(scrollPos);
-          if (!isScrolling && scrollPos < totalPanelsHeight) {
+          if (!isScrolling) {
             snapToSection();
           }
           ticking = false;
