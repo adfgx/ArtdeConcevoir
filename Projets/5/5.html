@@ -406,7 +406,7 @@
         panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
         panels[2].element.style.opacity = '1';
       } else {
-        const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight);
+        const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight * 0.5);
         panels[2].element.style.transform = 'translateY(0)';
         panels[2].element.style.opacity = `${fadeOut}`;
       }
