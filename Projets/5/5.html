@@ -352,6 +352,7 @@
       ];
 
       const sectionHeight = window.innerHeight;
+      const totalPanelsHeight = sectionHeight * 3; // Height of all three panels
       let ticking = false;
 
       function updatePanels(scrollPos) {
@@ -359,25 +360,33 @@
         const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
         const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
 
-        // Panel 1 transitions out when scrolling down
+        // Panel 1 transitions
         if (panel1Pos <= 0) {
           panels[0].element.style.transform = 'translateY(0)';
+          panels[0].element.style.opacity = '1';
         } else {
           panels[0].element.style.transform = `translateY(-${panel1Pos * 100}%)`;
+          panels[0].element.style.opacity = `${1 - panel1Pos * 0.5}`;
         }
 
-        // Panel 2 transitions in/out
+        // Panel 2 transitions
         if (panel2Pos <= 0) {
           panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 100}%)`;
+          panels[1].element.style.opacity = '1';
         } else {
           panels[1].element.style.transform = `translateY(-${panel2Pos * 100}%)`;
+          panels[1].element.style.opacity = `${1 - panel2Pos * 0.5}`;
         }
 
-        // Panel 3 transitions in
+        // Panel 3 transitions
         if (panel3Pos <= 0) {
           panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
+          panels[2].element.style.opacity = '1';
         } else {
+          // When scrolled past all panels, fade out completely
+          const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight);
           panels[2].element.style.transform = 'translateY(0)';
+          panels[2].element.style.opacity = `${fadeOut}`;
         }
       }
 
