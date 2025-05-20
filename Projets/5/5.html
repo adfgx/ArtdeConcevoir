@@ -16,6 +16,7 @@
 
     html { 
       scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
     }
 
     .scroll-section {
@@ -23,6 +24,7 @@
       height: 100vh;
       width: 100%;
       overflow: hidden;
+      scroll-snap-align: start;
     }
 
     .scroll-panel {
@@ -58,8 +60,16 @@
       position: relative;
       width: 100%;
       min-height: 100vh;
-      background: white; /* Ensure content sections have solid background */
-      z-index: 40; /* Above the scroll panels */
+      background: white;
+      z-index: 40;
+      scroll-snap-align: start;
+    }
+
+    /* Disable scroll-snap on mobile for better UX */
+    @media (max-width: 768px) {
+      html {
+        scroll-snap-type: none;
+      }
     }
   </style>
 </head>
