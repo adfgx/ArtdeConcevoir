@@ -75,7 +75,7 @@
 <body class="bg-white text-gray-800 scroll-smooth">
   <!-- Header -->
   <header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <header id="site-header" class="bg-white shadow-md fixed top-0 w-full z-50 transition-transform duration-500">
       <h1 class="text-2xl font-bold">Art de Concevoir</h1>
       <nav class="space-x-6 text-sm font-medium">
         <a href="#" class="hover:text-blue-600">Accueil</a>
@@ -85,6 +85,28 @@
       </nav>
     </div>
   </header>
+
+  <!-- Header behaviour -->
+  <script>
+  let lastScrollY = window.scrollY;
+  const header = document.getElementById('site-header');
+
+  window.addEventListener('scroll', () => {
+    if (!header) return;
+
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Scrolling down
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      // Scrolling up
+      header.style.transform = 'translateY(0)';
+    }
+
+    lastScrollY = currentScrollY;
+  });
+</script>
 
 <!-- Scroll Section 1: Hero -->
 <div class="scroll-section" id="section1">
