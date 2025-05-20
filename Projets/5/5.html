@@ -31,8 +31,8 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+      will-change: transform, opacity;
     }
 
     #panel1 { z-index: 30; }
@@ -58,13 +58,8 @@
       position: relative;
       width: 100%;
       min-height: 100vh;
-    }
-
-    /* Smooth scroll behavior */
-    @media (prefers-reduced-motion: no-preference) {
-      html {
-        scroll-behavior: smooth;
-      }
+      background: white; /* Ensure content sections have solid background */
+      z-index: 40; /* Above the scroll panels */
     }
   </style>
 </head>
