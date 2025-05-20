@@ -378,7 +378,7 @@ style="height: calc(var(--vh, 1vh) * 100); background-image: url('Projets/33/ima
       once: true,
       easing: 'ease-in-out',
     });
-    
+
     let vhTimeout;
 function setViewportHeight() {
   clearTimeout(vhTimeout);
@@ -413,7 +413,7 @@ function setViewportHeight() {
   // Run on page load
   window.addEventListener("DOMContentLoaded", updatePanelBackgrounds);
   // Run on resize or rotation
-  window.addEventListener("resize", updatePanelBackgrounds);
+  window.addEventListener('load', setViewportHeight);
 </script>
 
 </body>
