@@ -354,6 +354,8 @@
     const sectionHeight = window.innerHeight;
     const totalPanelsHeight = sectionHeight * 3;
     let ticking = false;
+    let isScrolling = false;
+    let lastScrollY = window.scrollY;
 
     function updatePanels(scrollPos) {
       const panel1Pos = scrollPos / sectionHeight;
@@ -392,12 +394,43 @@
       }
     }
 
+    function snapToSection() {
+      if (isScrolling) return;
+      
+      const scrollPos = window.scrollY;
+      const currentSection = Math.round(scrollPos / sectionHeight);
+      const targetPos = currentSection * sectionHeight;
+      
+      // Only snap if we're in the first three sections and not at the very bottom of section 3
+      if (scrollPos < totalPanelsHeight - 5) {
+        if (Math.abs(scrollPos - targetPos) > 5) {
+          isScrolling = true;
+          window.scrollTo({
+            top: targetPos,
+            behavior: 'smooth'
+          });
+          
+          setTimeout(() => {
+            isScrolling = false;
+          }, 1000);
+        }
+      }
+    }
+
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY;
+      const scrollDirection = scrollPos > lastScrollY ? 'down' : 'up';
+      lastScrollY = scrollPos;
       
       if (!ticking) {
         window.requestAnimationFrame(() => {
           updatePanels(scrollPos);
+          
+          // Only trigger snap when scrolling up or when not at section 3
+          if (scrollDirection === 'up' || scrollPos < totalPanelsHeight - sectionHeight) {
+            snapToSection();
+          }
+          
           ticking = false;
         });
         ticking = true;
