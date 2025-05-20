@@ -361,9 +361,16 @@
         { element: document.getElementById('panel3'), active: false }
       ];
 
+      const sections = [
+        document.getElementById('section1'),
+        document.getElementById('section2'),
+        document.getElementById('section3')
+      ];
+
       const sectionHeight = window.innerHeight;
-      const totalPanelsHeight = sectionHeight * 3; // Height of all three panels
+      const totalPanelsHeight = sectionHeight * 3;
       let ticking = false;
+      let isScrolling = false;
 
       function updatePanels(scrollPos) {
         const panel1Pos = scrollPos / sectionHeight;
@@ -393,10 +400,31 @@
           panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
           panels[2].element.style.opacity = '1';
         } else {
-          // When scrolled past all panels, fade out completely
           const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight);
           panels[2].element.style.transform = 'translateY(0)';
           panels[2].element.style.opacity = `${fadeOut}`;
+        }
+      }
+
+      // Handle scroll snapping
+      function snapToSection() {
+        if (isScrolling) return;
+        
+        const scrollPos = window.scrollY;
+        const currentSection = Math.round(scrollPos / sectionHeight);
+        const targetPos = currentSection * sectionHeight;
+        
+        if (Math.abs(scrollPos - targetPos) > 5) {
+          isScrolling = true;
+          window.scrollTo({
+            top: targetPos,
+            behavior: 'smooth'
+          });
+          
+          // Reset flag after scroll completes
+          setTimeout(() => {
+            isScrolling = false;
+          }, 1000);
         }
       }
 
@@ -406,6 +434,9 @@
         if (!ticking) {
           window.requestAnimationFrame(() => {
             updatePanels(scrollPos);
+            if (!isScrolling) {
+              snapToSection();
+            }
             ticking = false;
           });
           ticking = true;
