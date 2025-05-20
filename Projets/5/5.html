@@ -354,70 +354,99 @@
 
    <!-- Scroll animation script -->
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const panels = [
-      { element: document.getElementById('panel1'), active: true },
-      { element: document.getElementById('panel2'), active: false },
-      { element: document.getElementById('panel3'), active: false }
-    ];
+    document.addEventListener('DOMContentLoaded', () => {
+      const panels = [
+        { element: document.getElementById('panel1'), active: true },
+        { element: document.getElementById('panel2'), active: false },
+        { element: document.getElementById('panel3'), active: false }
+      ];
 
-    const sectionHeight = window.innerHeight;
-    const totalPanelsHeight = sectionHeight * 3;
-    let ticking = false;
+      const sections = [
+        document.getElementById('section1'),
+        document.getElementById('section2'),
+        document.getElementById('section3')
+      ];
 
-    function updatePanels(scrollPos) {
-      const panel1Pos = scrollPos / sectionHeight;
-      const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
-      const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
+      const sectionHeight = window.innerHeight;
+      const totalPanelsHeight = sectionHeight * 3;
+      let ticking = false;
+      let isScrolling = false;
 
-      // Panel 1 transitions - Slide up with fade and slight scale
-      if (panel1Pos <= 0) {
-        panels[0].element.style.transform = 'translateY(0) scale(1)';
-        panels[0].element.style.opacity = '1';
-      } else {
-        panels[0].element.style.transform = `translateY(-${panel1Pos * 50}%) scale(${1 - panel1Pos * 0.2})`;
-        panels[0].element.style.opacity = `${1 - panel1Pos * 0.8}`;
+      function updatePanels(scrollPos) {
+        const panel1Pos = scrollPos / sectionHeight;
+        const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
+        const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
+
+        // Panel 1 transitions
+        if (panel1Pos <= 0) {
+          panels[0].element.style.transform = 'translateY(0)';
+          panels[0].element.style.opacity = '1';
+        } else {
+          panels[0].element.style.transform = `translateY(-${panel1Pos * 100}%)`;
+          panels[0].element.style.opacity = `${1 - panel1Pos * 0.5}`;
+        }
+
+        // Panel 2 transitions
+        if (panel2Pos <= 0) {
+          panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 100}%)`;
+          panels[1].element.style.opacity = '1';
+        } else {
+          panels[1].element.style.transform = `translateY(-${panel2Pos * 100}%)`;
+          panels[1].element.style.opacity = `${1 - panel2Pos * 0.5}`;
+        }
+
+        // Panel 3 transitions
+        if (panel3Pos <= 0) {
+          panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
+          panels[2].element.style.opacity = '1';
+        } else {
+          const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight);
+          panels[2].element.style.transform = 'translateY(0)';
+          panels[2].element.style.opacity = `${fadeOut}`;
+        }
       }
 
-      // Panel 2 transitions - Parallax effect with rotation
-      if (panel2Pos <= 0) {
-        panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 30}%) rotate(${Math.abs(panel2Pos) * 5}deg)`;
-        panels[1].element.style.opacity = '1';
-      } else {
-        panels[1].element.style.transform = `translateY(-${panel2Pos * 30}%) rotate(-${panel2Pos * 5}deg)`;
-        panels[1].element.style.opacity = `${1 - panel2Pos * 0.6}`;
+      // Handle scroll snapping
+      function snapToSection() {
+        if (isScrolling) return;
+        
+        const scrollPos = window.scrollY;
+        const currentSection = Math.round(scrollPos / sectionHeight);
+        const targetPos = currentSection * sectionHeight;
+        
+        if (Math.abs(scrollPos - targetPos) > 5) {
+          isScrolling = true;
+          window.scrollTo({
+            top: targetPos,
+            behavior: 'smooth'
+          });
+          
+          // Reset flag after scroll completes
+          setTimeout(() => {
+            isScrolling = false;
+          }, 1000);
+        }
       }
 
-      // Panel 3 transitions - 3D perspective effect
-      if (panel3Pos <= 0) {
-        const rotateX = Math.abs(panel3Pos) * 15;
-        panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 20}%) perspective(1000px) rotateX(${rotateX}deg)`;
-        panels[2].element.style.opacity = '1';
-        panels[2].element.style.transformOrigin = 'center top';
-      } else {
-        const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight);
-        panels[2].element.style.transform = 'perspective(1000px) rotateX(0deg)';
-        panels[2].element.style.opacity = `${fadeOut}`;
-        panels[2].element.style.transformOrigin = 'center bottom';
-      }
-    }
+      window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY;
+        
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updatePanels(scrollPos);
+            if (!isScrolling) {
+              snapToSection();
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
 
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY;
-      
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updatePanels(scrollPos);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      // Initialize panels position
+      updatePanels(0);
     });
-
-    // Initialize panels position
-    updatePanels(0);
-  });
-</script>
+  </script>
 
   <!-- AOS script -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
