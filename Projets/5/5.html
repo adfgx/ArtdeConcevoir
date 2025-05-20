@@ -342,7 +342,7 @@
     © 2025 Art de Concevoir. Tous droits réservés.
   </footer>
 
-  <!-- Scroll animation script -->
+   <!-- Scroll animation script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const panels = [
@@ -350,6 +350,9 @@
         { element: document.getElementById('panel2'), active: false },
         { element: document.getElementById('panel3'), active: false }
       ];
+
+      // Debug: Check if panels are found
+      console.log('Panels:', panels);
 
       const sectionHeight = window.innerHeight;
       let ticking = false;
