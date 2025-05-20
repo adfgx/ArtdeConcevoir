@@ -355,113 +355,81 @@
 
    <!-- Scroll animation script -->
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const panels = [
-      { element: document.getElementById('panel1'), active: true },
-      { element: document.getElementById('panel2'), active: false },
-      { element: document.getElementById('panel3'), active: false }
-    ];
+document.addEventListener('DOMContentLoaded', () => {
+  const panels = [
+    { element: document.getElementById('panel1'), active: true },
+    { element: document.getElementById('panel2'), active: false },
+    { element: document.getElementById('panel3'), active: false }
+  ];
 
-    const sectionHeight = window.innerHeight;
-    const totalPanelsHeight = sectionHeight * 3;
-    let ticking = false;
-    let isScrolling = false;
-    let lastScrollY = window.scrollY;
+  const sectionHeight = window.innerHeight;
+  const totalPanelsHeight = sectionHeight * 3;
+  let isScrolling = false;
 
-    function updatePanels(scrollPos) {
-      const panel1Pos = scrollPos / sectionHeight;
-      const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
-      const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
-
-      // Panel 1 transitions - Slide up with fade and slight scale
-      if (panel1Pos <= 0) {
-        panels[0].element.style.transform = 'translateY(0) scale(1)';
-        panels[0].element.style.opacity = '1';
-      } else {
-        panels[0].element.style.transform = `translateY(-${panel1Pos * 50}%) scale(${1 - panel1Pos * 0.2})`;
-        panels[0].element.style.opacity = `${1 - panel1Pos * 0.8}`;
-      }
-
-      // Panel 2 transitions - Parallax effect with rotation
-      if (panel2Pos <= 0) {
-        panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 30}%) rotate(${Math.abs(panel2Pos) * 5}deg)`;
-        panels[1].element.style.opacity = '1';
-      } else {
-        panels[1].element.style.transform = `translateY(-${panel2Pos * 30}%) rotate(-${panel2Pos * 5}deg)`;
-        panels[1].element.style.opacity = `${1 - panel2Pos * 0.6}`;
-      }
-
-      // Panel 3 transitions - 3D perspective effect
-      if (panel3Pos <= 0) {
-        const rotateX = Math.abs(panel3Pos) * 15;
-        panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 20}%) perspective(1000px) rotateX(${rotateX}deg)`;
-        panels[2].element.style.opacity = '1';
-        panels[2].element.style.transformOrigin = 'center top';
-      } else {
-        const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight);
-        panels[2].element.style.transform = 'perspective(1000px) rotateX(0deg)';
-        panels[2].element.style.opacity = `${fadeOut}`;
-        panels[2].element.style.transformOrigin = 'center bottom';
-      }
+  function updatePanels(scrollPos) {
+    // Panel 1 - Fades out as we scroll down
+    if (scrollPos <= sectionHeight) {
+      const progress = scrollPos / sectionHeight;
+      panels[0].element.style.opacity = 1 - progress;
+      panels[0].element.style.transform = `translateY(-${progress * 30}%)`;
+    } else {
+      panels[0].element.style.opacity = 0;
     }
 
-    function snapToSection() {
-      if (isScrolling) return;
-      
-      const scrollPos = window.scrollY;
-      const currentSection = Math.round(scrollPos / sectionHeight);
-      const targetPos = currentSection * sectionHeight;
-      
-      // Only snap if we're in the first three sections and not at the very bottom of section 3
-      if (scrollPos < totalPanelsHeight - 5) {
-        if (Math.abs(scrollPos - targetPos) > 5) {
-          isScrolling = true;
-          window.scrollTo({
-            top: targetPos,
-            behavior: 'smooth'
-          });
-          
-          setTimeout(() => {
-            isScrolling = false;
-          }, 1000);
-        }
-      }
+    // Panel 2 - Comes into view, then fades out
+    if (scrollPos <= sectionHeight * 2) {
+      const progress = Math.max(0, (scrollPos - sectionHeight) / sectionHeight);
+      panels[1].element.style.opacity = Math.min(progress, 1 - (progress - 0.5) * 2);
+    } else {
+      panels[1].element.style.opacity = 0;
     }
 
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY;
-      const scrollDirection = scrollPos > lastScrollY ? 'down' : 'up';
-      lastScrollY = scrollPos;
-      
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updatePanels(scrollPos);
-          
-          // Only trigger snap when scrolling up or when not at section 3
-          if (scrollDirection === 'up' || scrollPos < totalPanelsHeight - sectionHeight) {
-            snapToSection();
-          }
-          
-          ticking = false;
+    // Panel 3 - Comes into view
+    if (scrollPos >= sectionHeight) {
+      const progress = Math.min(1, (scrollPos - sectionHeight) / sectionHeight);
+      panels[2].element.style.opacity = progress;
+      panels[2].element.style.transform = `translateY(-${(1 - progress) * 30}%)`;
+    } else {
+      panels[2].element.style.opacity = 0;
+    }
+  }
+
+  function snapToSection() {
+    if (isScrolling) return;
+    
+    const scrollPos = window.scrollY;
+    const currentSection = Math.round(scrollPos / sectionHeight);
+    const targetPos = currentSection * sectionHeight;
+    
+    // Only snap if we're in the first three sections
+    if (scrollPos < totalPanelsHeight) {
+      if (Math.abs(scrollPos - targetPos) > 5) {
+        isScrolling = true;
+        window.scrollTo({
+          top: targetPos,
+          behavior: 'smooth'
         });
-        ticking = true;
+        
+        setTimeout(() => {
+          isScrolling = false;
+        }, 1000);
       }
-    });
+    }
+  }
 
-    // Initialize panels position
-    updatePanels(0);
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY;
+    
+    if (!isScrolling) {
+      updatePanels(scrollPos);
+      snapToSection();
+    }
   });
-</script>
 
-  <!-- AOS script -->
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: 'ease-in-out',
-    });
-  </script>
+  // Initialize panels position
+  updatePanels(0);
+});
+</script>
 
 </body>
 </html>
