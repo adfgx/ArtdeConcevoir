@@ -374,6 +374,7 @@
     let ticking = false;
     let isScrolling = false;
     let lastScrollTime = 0;
+    let lastScrollDirection = null;
 
     function updatePanels(scrollPos) {
       const panel1Pos = scrollPos / sectionHeight;
@@ -409,34 +410,48 @@
       }
     }
 
-    // Handle scroll snapping only for the first three sections
+    // Handle scroll snapping
     function snapToSection() {
       if (isScrolling) return;
       
       const scrollPos = window.scrollY;
       const now = Date.now();
-      const scrollSpeed = Math.abs(scrollPos - lastScrollY);
+      const scrollDirection = scrollPos > lastScrollY ? 'down' : 'up';
+      lastScrollDirection = scrollDirection;
       lastScrollY = scrollPos;
       
-      // Only snap if we're in the first three sections
+      // Only snap in the panel sections area
       if (scrollPos < totalPanelsHeight) {
         const currentSection = Math.floor(scrollPos / sectionHeight);
         const sectionProgress = (scrollPos % sectionHeight) / sectionHeight;
         
-        // Only snap if:
-        // 1. We're near the top/bottom of a section (within 30%)
-        // 2. OR we're scrolling fast (user intent to move sections)
+        // Special case: When scrolling down from section 3, don't snap
+        if (currentSection === 2 && scrollDirection === 'down') {
+          return;
+        }
+        
+        // Snap conditions:
+        // 1. When scrolling up from below section 3 (snap to section 3)
+        // 2. When scrolling between section 1 and 2
+        // 3. When scrolling between section 2 and 3
         const shouldSnap = 
-          (sectionProgress < 0.3 && scrollPos < lastScrollY) ||  // scrolling up near top
-          (sectionProgress > 0.7 && scrollPos > lastScrollY) ||  // scrolling down near bottom
-          (scrollSpeed > 50 && now - lastScrollTime < 100);      // fast scroll
+          (scrollPos > totalPanelsHeight && scrollDirection === 'up') || // scrolling up from content
+          (currentSection < 2 && sectionProgress < 0.3 && scrollDirection === 'up') || // scrolling up in sections 1-2
+          (currentSection < 2 && sectionProgress > 0.7 && scrollDirection === 'down') || // scrolling down in sections 1-2
+          (currentSection === 1 && scrollDirection === 'down' && sectionProgress > 0.7); // scrolling down to section 3
         
         if (shouldSnap) {
-          const targetPos = currentSection * sectionHeight;
+          let targetPos;
           
-          // If scrolling down near bottom of section, go to next section
-          if (sectionProgress > 0.7 && scrollPos > lastScrollY && currentSection < 2) {
+          if (scrollPos > totalPanelsHeight && scrollDirection === 'up') {
+            // Snap to section 3 when scrolling up from content
+            targetPos = totalPanelsHeight - sectionHeight;
+          } else if (scrollDirection === 'down') {
+            // Snap to next section when scrolling down
             targetPos = (currentSection + 1) * sectionHeight;
+          } else {
+            // Snap to previous section when scrolling up
+            targetPos = currentSection * sectionHeight;
           }
           
           isScrolling = true;
