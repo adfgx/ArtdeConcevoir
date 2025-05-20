@@ -158,8 +158,7 @@
   </div>
 
   <!-- Spacer to enable scroll past fixed panels -->
-<div style="height: 100vh;"></div>
-
+   <div style="height: 200vh;"></div>
 
   <!-- Services Section -->
   <section class="content-section relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
@@ -458,12 +457,17 @@
     
     // Add scroll-snap-type only when in the first three sections
     function checkScrollSnap() {
-      if (window.scrollY < totalPanelsHeight) {
-        document.documentElement.style.scrollSnapType = 'y mandatory';
-      } else {
-        document.documentElement.style.scrollSnapType = 'none';
-      }
-    }
+  const scrollY = window.scrollY;
+
+  if (scrollY < sectionHeight * 2.5) {
+    // Snap only until halfway through panel3
+    document.documentElement.style.scrollSnapType = 'y mandatory';
+  } else {
+    // Disable snap once you're far into panel3
+    document.documentElement.style.scrollSnapType = 'none';
+  }
+}
+
     
     window.addEventListener('scroll', checkScrollSnap);
     checkScrollSnap();
