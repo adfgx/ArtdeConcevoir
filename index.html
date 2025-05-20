@@ -230,5 +230,32 @@
       easing: 'ease-in-out',
     });
   </script>
+  
+  <script>
+  function updatePanelBackgrounds() {
+    const isPortrait = window.innerHeight / window.innerWidth > 1;
+
+    const panel2 = document.getElementById("panel2");
+    const panel3 = document.getElementById("panel3");
+
+    if (panel2) {
+      panel2.style.backgroundImage = isPortrait
+        ? "url('Projets/1/images/panel2-mobile.jpg')"
+        : "url('Projets/1/images/panel2-desktop.jpg')";
+    }
+
+    if (panel3) {
+      panel3.style.backgroundImage = isPortrait
+        ? "url('Projets/1/images/panel3-mobile.jpg')"
+        : "url('Projets/1/images/panel3-desktop.jpg')";
+    }
+  }
+
+  // Run on page load
+  window.addEventListener("DOMContentLoaded", updatePanelBackgrounds);
+  // Run on resize or rotation
+  window.addEventListener("resize", updatePanelBackgrounds);
+</script>
+
 </body>
 </html>
