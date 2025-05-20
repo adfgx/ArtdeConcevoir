@@ -151,8 +151,8 @@
   </div>
 
   <!-- Services Section -->
-  <section class="relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
-  style="height: 100vh; background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/33/images/16.9/1.5.jpg'); scroll-snap-align: start;">
+  <section class="content-section relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
+  style="background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/33/images/16.9/1.5.jpg');">
     <div class="bg-black bg-opacity-40 absolute inset-0"></div>
     <div class="relative z-10 max-w-2xl text-center" data-aos="fade-up">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">Services</h2>
@@ -169,7 +169,7 @@
   </section>
 
   <!-- Featured Projects -->
-  <section id="projets" class="py-16 bg-white">
+  <section id="projets" class="content-section py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Nos Projets</h2>
 
@@ -319,7 +319,7 @@
 </section>
 
   <!-- About -->
-  <section id="a-propos" class="bg-gray-50 py-16">
+  <section id="a-propos" class="content-section bg-gray-50 py-16">
     <div class="max-w-4xl mx-auto px-4 text-center">
       <h3 class="text-3xl font-bold mb-6" data-aos="fade-up">À propos de nous</h3>
       <p class="text-gray-700 text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="150">
@@ -329,7 +329,7 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="py-16 bg-white">
+  <section id="contact" class="content-section py-16 bg-white">
     <div class="max-w-xl mx-auto px-4 text-center">
       <h3 class="text-3xl font-bold mb-6" data-aos="slide-up">Contact</h3>
       <p class="mb-4 text-gray-600" data-aos="slide-up" data-aos-delay="100">Vous avez un projet? Parlons-en.</p>
@@ -355,9 +355,6 @@
         { element: document.getElementById('panel2'), active: false },
         { element: document.getElementById('panel3'), active: false }
       ];
-
-      // Debug: Check if panels are found
-      console.log('Panels:', panels);
 
       const sectionHeight = window.innerHeight;
       let ticking = false;
@@ -405,7 +402,7 @@
       updatePanels(0);
     });
   </script>
-      
+
   <!-- AOS script -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
