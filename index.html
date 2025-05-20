@@ -378,6 +378,16 @@ style="height: calc(var(--vh, 1vh) * 100); background-image: url('Projets/33/ima
       once: true,
       easing: 'ease-in-out',
     });
+    
+    let vhTimeout;
+function setViewportHeight() {
+  clearTimeout(vhTimeout);
+  vhTimeout = setTimeout(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, 100); // delay helps avoid excessive recalculations
+}
+
   </script>
 
   <script>
