@@ -16,6 +16,7 @@
 
     html { 
       scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
     }
 
     .scroll-section {
@@ -24,6 +25,16 @@
       width: 100%;
       overflow: hidden;
     }
+
+    #section1, #section2, #section3 {
+    scroll-snap-align: start;
+    }
+
+    @media (max-width: 768px) {
+    html {
+      scroll-snap-type: none;
+    }
+  }
 
     .scroll-panel {
       position: fixed;
