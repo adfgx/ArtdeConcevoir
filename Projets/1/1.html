@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Art de Concevoir</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -39,12 +39,20 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       overscroll-behavior: none;
       touch-action: manipulation;
+      position: fixed;
       height: 100%;
-      margin: 0;
-      padding: 0;
+      width: 100%;
     }
 
     html { 
@@ -54,7 +62,7 @@
 
     .scroll-section {
       position: relative;
-      height: 100vh;
+      height: 100dvh;
       width: 100%;
       overflow: hidden;
     }
@@ -64,7 +72,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh;
+      height: 100dvh;
       transition: opacity 1s ease, transform 1s ease;
       pointer-events: auto;
     }
@@ -77,13 +85,6 @@
       opacity: 0;
       transform: none;
       pointer-events: none;
-    }
-    
-    /* Prevent address bar show/hide on mobile from affecting layout */
-    @supports (height: 100dvh) {
-      .scroll-section, .scroll-panel {
-        height: 100dvh;
-      }
     }
   </style>
 </head>
@@ -166,6 +167,24 @@
       </div>
     </div>
   </div>
+      
+  <!-- Transition Section 3 -->
+  <section class="relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
+    style="height: 100dvh; background-image: url('Projets/33/images/16.9/1.5.jpg');">
+    <div class="bg-black bg-opacity-40 absolute inset-0"></div>
+    <div class="relative z-10 max-w-2xl text-center" data-aos="fade-up">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Services</h2>
+      <p class="text-lg leading-relaxed">
+          Modelisation 3d, video, rendu, intérieur et extérieur
+          Plans de rénovation
+          Plans personnalisés
+          Plans d'amenagement extérieur/intérieur
+          Plans d'ajout (Garage, terrasse, escaliers, toit)
+          Plan de Construction de maison neuve et Isolée
+          Soumission gratuite, free estimate $0
+      </p>
+    </div>
+  </section>
       
   <!-- Transition Section 3 -->
   <section class="relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
@@ -397,8 +416,5 @@
     // Run on resize or rotation
     window.addEventListener('resize', updatePanelBackgrounds);
   </script>
-</body>
-</html>
-
 </body>
 </html>
