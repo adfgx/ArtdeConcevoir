@@ -84,23 +84,20 @@
   <!-- Header behaviour -->
   <script>
   let lastScrollY = window.scrollY;
-  const header = document.getElementById('site-header');
+    const header = document.getElementById('site-header');
 
-  window.addEventListener('scroll', () => {
-    if (!header) return;
+    window.addEventListener('scroll', () => {
+      if (!header) return;
+      const currentScrollY = window.scrollY;
 
-    const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        header.style.transform = 'translateY(-100%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
 
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
-      // Scrolling down
-      header.style.transform = 'translateY(-100%)';
-    } else {
-      // Scrolling up
-      header.style.transform = 'translateY(0)';
-    }
-
-    lastScrollY = currentScrollY;
-  });
+      lastScrollY = currentScrollY;
+    });
 </script>
 
 <!-- Scroll Section 1: Hero -->
@@ -150,21 +147,18 @@
 <!--Scroll section scripts-->
 <script>
   window.addEventListener('scroll', () => {
-    const sections = ['panel1', 'panel2', 'panel3'];
-    const threshold = window.innerHeight * 0.5;
+      const sections = ['panel1', 'panel2', 'panel3'];
+      const threshold = window.innerHeight * 0.5;
 
-    sections.forEach((id, i) => {
-      const panel = document.getElementById(id);
-      const section = document.getElementById(`section${i + 1}`);
-      const rect = section.getBoundingClientRect();
+      sections.forEach((id, i) => {
+        const panel = document.getElementById(id);
+        const section = document.getElementById(`section${i + 1}`);
+        if (!panel || !section) return;
 
-      if (rect.top < -threshold) {
-        panel.classList.add('fade-out');
-      } else {
-        panel.classList.remove('fade-out');
-      }
+        const rect = section.getBoundingClientRect();
+        panel.classList.toggle('fade-out', rect.top < -threshold);
+      });
     });
-  });
 </script>
 
 <script>
@@ -421,6 +415,24 @@ function setViewportHeight() {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }, 100); // delay helps avoid excessive recalculations
 }
+// Handle mobile viewport changes
+    function handleViewportChanges() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      
+      // Force recalculate panels
+      window.dispatchEvent(new Event('scroll'));
+    }
+
+    // Set initial viewport height
+    handleViewportChanges();
+    
+    // Only update after resize ends to prevent jank
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleViewportChanges, 100);
+    });
   </script>
 
 </body>
