@@ -157,9 +157,6 @@
     </div>
   </div>
 
-  <!-- Spacer to enable scroll past fixed panels -->
-   <div style="height: 200vh;"></div>
-
   <!-- Services Section -->
   <section class="content-section relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
   style="background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/33/images/16.9/1.5.jpg');">
@@ -359,119 +356,136 @@
 
    <!-- Scroll animation script -->
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const panels = [
-      { element: document.getElementById('panel1'), active: true },
-      { element: document.getElementById('panel2'), active: false },
-      { element: document.getElementById('panel3'), active: false }
-    ];
+document.addEventListener('DOMContentLoaded', () => {
+  const panels = [
+    { element: document.getElementById('panel1'), active: true },
+    { element: document.getElementById('panel2'), active: false },
+    { element: document.getElementById('panel3'), active: false }
+  ];
 
-    const sections = [
-      document.getElementById('section1'),
-      document.getElementById('section2'),
-      document.getElementById('section3')
-    ];
+  const sectionHeight = window.innerHeight;
+  const totalPanelsHeight = sectionHeight * 3;
+  let ticking = false;
+  let isScrolling = false;
+  let lastScrollTime = 0;
+  let lastScrollY = window.scrollY;
+  let scrollDirection = 'down';
 
-    const sectionHeight = window.innerHeight;
-    const totalPanelsHeight = sectionHeight * 3;
-    let ticking = false;
-    let isScrolling = false;
-
-    function updatePanels(scrollPos) {
-      const panel1Pos = scrollPos / sectionHeight;
-      const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
-      const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
-
-      // Panel 1 transitions
-      if (panel1Pos <= 0) {
-        panels[0].element.style.transform = 'translateY(0)';
-        panels[0].element.style.opacity = '1';
-      } else {
-        panels[0].element.style.transform = `translateY(-${panel1Pos * 100}%)`;
-        panels[0].element.style.opacity = `${1 - panel1Pos * 0.5}`;
-      }
-
-      // Panel 2 transitions
-      if (panel2Pos <= 0) {
-        panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 100}%)`;
-        panels[1].element.style.opacity = '1';
-      } else {
-        panels[1].element.style.transform = `translateY(-${panel2Pos * 100}%)`;
-        panels[1].element.style.opacity = `${1 - panel2Pos * 0.5}`;
-      }
-
-      // Panel 3 transitions
-      if (panel3Pos <= 0) {
-        panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
-        panels[2].element.style.opacity = '1';
-      } else {
-        const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight * 0.5);
-        panels[2].element.style.transform = 'translateY(0)';
-        panels[2].element.style.opacity = `${fadeOut}`;
-      }
-    }
-
-    // Handle scroll snapping only for the first three sections
-    function snapToSection() {
-      if (isScrolling) return;
-      
-      const scrollPos = window.scrollY;
-      
-      // Only snap if we're in the first three sections
-      if (scrollPos < totalPanelsHeight) {
-        const currentSection = Math.round(scrollPos / sectionHeight);
-        const targetPos = currentSection * sectionHeight;
-        
-        if (Math.abs(scrollPos - targetPos) > 5) {
-          isScrolling = true;
-          window.scrollTo({
-            top: targetPos,
-            behavior: 'smooth'
-          });
-          
-          // Reset flag after scroll completes
-          setTimeout(() => {
-            isScrolling = false;
-          }, 1000);
-        }
-      }
-    }
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY;
-      
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updatePanels(scrollPos);
-          if (!isScrolling && scrollPos < totalPanelsHeight) {
-            snapToSection();
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-
-    // Initialize panels position
-    updatePanels(0);
-    
-    // Add scroll-snap-type only when in the first three sections
-    function checkScrollSnap() {
-  const scrollY = window.scrollY;
-
-  if (scrollY < sectionHeight * 2.5) {
-    // Snap only until halfway through panel3
-    document.documentElement.style.scrollSnapType = 'y mandatory';
-  } else {
-    // Disable snap once you're far into panel3
+  // Disable scroll-snap on mobile
+  if (window.innerWidth <= 768) {
     document.documentElement.style.scrollSnapType = 'none';
   }
-}
 
+  function updatePanels(scrollPos) {
+    const panel1Pos = scrollPos / sectionHeight;
+    const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
+    const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
+
+    // Panel 1 transitions
+    if (panel1Pos <= 0) {
+      panels[0].element.style.transform = 'translateY(0)';
+      panels[0].element.style.opacity = '1';
+    } else {
+      panels[0].element.style.transform = `translateY(-${panel1Pos * 100}%)`;
+      panels[0].element.style.opacity = `${1 - panel1Pos * 0.5}`;
+    }
+
+    // Panel 2 transitions
+    if (panel2Pos <= 0) {
+      panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 100}%)`;
+      panels[1].element.style.opacity = '1';
+    } else {
+      panels[1].element.style.transform = `translateY(-${panel2Pos * 100}%)`;
+      panels[1].element.style.opacity = `${1 - panel2Pos * 0.5}`;
+    }
+
+    // Panel 3 transitions
+    if (panel3Pos <= 0) {
+      panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
+      panels[2].element.style.opacity = '1';
+    } else {
+      const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight * 0.5);
+      panels[2].element.style.transform = 'translateY(0)';
+      panels[2].element.style.opacity = `${fadeOut}`;
+    }
+  }
+
+  function snapToSection() {
+    if (isScrolling) return;
     
-    window.addEventListener('scroll', checkScrollSnap);
-    checkScrollSnap();
+    const scrollPos = window.scrollY;
+    const now = Date.now();
+    const deltaY = scrollPos - lastScrollY;
+    
+    // Only snap if we're in the first three sections and not rapidly scrolling
+    if (scrollPos < totalPanelsHeight && (now - lastScrollTime) > 100) {
+      let currentSection;
+      
+      // Determine section based on scroll direction
+      if (scrollDirection === 'down') {
+        currentSection = Math.floor(scrollPos / sectionHeight) + 1;
+      } else {
+        currentSection = Math.floor(scrollPos / sectionHeight);
+      }
+      
+      // Clamp between 0 and 2
+      currentSection = Math.max(0, Math.min(2, currentSection));
+      
+      const targetPos = currentSection * sectionHeight;
+      
+      if (Math.abs(scrollPos - targetPos) > 5) {
+        isScrolling = true;
+        window.scrollTo({
+          top: targetPos,
+          behavior: 'smooth'
+        });
+        
+        // Reset flag after scroll completes
+        setTimeout(() => {
+          isScrolling = false;
+        }, 800);
+      }
+    }
+    lastScrollTime = now;
+    lastScrollY = scrollPos;
+  }
+
+  function checkScrollSnap() {
+    const scrollY = window.scrollY;
+    scrollDirection = scrollY > lastScrollY ? 'down' : 'up';
+    lastScrollY = scrollY;
+
+    // Enable snap only when:
+    // - We're in the first two panels
+    // - OR we're in panel 3 and scrolling up
+    if (scrollY < sectionHeight * 2 || 
+        (scrollY < sectionHeight * 3 && scrollDirection === 'up')) {
+      document.documentElement.style.scrollSnapType = 'y mandatory';
+    } else {
+      document.documentElement.style.scrollSnapType = 'none';
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY;
+    
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updatePanels(scrollPos);
+        checkScrollSnap();
+        if (!isScrolling && scrollPos < totalPanelsHeight) {
+          snapToSection();
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
+
+  // Initialize panels position
+  updatePanels(0);
+  checkScrollSnap();
+});
 </script>
 
   <!-- AOS script -->
