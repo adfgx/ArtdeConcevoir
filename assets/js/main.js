@@ -149,10 +149,7 @@
 					var top, bottom, mode;
 
 					// Use main <img>'s src as this spotlight's background.
-						var $media = $this.find('.image.main > img, .image.main > video');
-if ($media.length && $media.is('img')) {
-    $this.css('background-image', 'url("' + $media.attr('src') + '")');
-}
+						$this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
 
 					// Side-specific scrollex tweaks.
 						if ($this.hasClass('top')) {
