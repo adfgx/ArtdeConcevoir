@@ -147,7 +147,7 @@
   </div>
 </div>
 
-<!--Scroll section fade transitions-->
+<!--Scroll section scripts-->
 <script>
   window.addEventListener('scroll', () => {
     const sections = ['panel1', 'panel2', 'panel3'];
@@ -165,6 +165,32 @@
       }
     });
   });
+</script>
+
+<script>
+  function updatePanelBackgrounds() {
+    const isPortrait = window.innerHeight / window.innerWidth > 1;
+
+    const panel2 = document.getElementById("panel2");
+    const panel3 = document.getElementById("panel3");
+
+    if (panel2) {
+      panel2.style.backgroundImage = isPortrait
+        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
+        : "url('Projets/32/images/16.9/1.jpg')";
+    }
+
+    if (panel3) {
+      panel3.style.backgroundImage = isPortrait
+        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
+        : "url('Projets/1/images/16.9/1.5.jpg')";
+    }
+  }
+
+  // Run on page load
+  window.addEventListener("DOMContentLoaded", updatePanelBackgrounds);
+  // Run on resize or rotation
+  window.addEventListener('load', setViewportHeight);
 </script>
       
 
@@ -395,34 +421,7 @@ function setViewportHeight() {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }, 100); // delay helps avoid excessive recalculations
 }
-
   </script>
-
-  <script>
-  function updatePanelBackgrounds() {
-    const isPortrait = window.innerHeight / window.innerWidth > 1;
-
-    const panel2 = document.getElementById("panel2");
-    const panel3 = document.getElementById("panel3");
-
-    if (panel2) {
-      panel2.style.backgroundImage = isPortrait
-        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
-        : "url('Projets/32/images/16.9/1.jpg')";
-    }
-
-    if (panel3) {
-      panel3.style.backgroundImage = isPortrait
-        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
-        : "url('Projets/1/images/16.9/1.5.jpg')";
-    }
-  }
-
-  // Run on page load
-  window.addEventListener("DOMContentLoaded", updatePanelBackgrounds);
-  // Run on resize or rotation
-  window.addEventListener('load', setViewportHeight);
-</script>
 
 </body>
 </html>
