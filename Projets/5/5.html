@@ -9,71 +9,59 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
-  body {
-    overscroll-behavior: none;
-    touch-action: manipulation;
-  }
-
-  html { 
-    scroll-behavior: smooth;
-  }
-
-  /* Only apply scroll-snap to the first three sections */
-  #section1, #section2, #section3 {
-    scroll-snap-align: start;
-  }
-
-  .scroll-section {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    overflow: visible;
-  }
-
-  .scroll-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
-    will-change: transform, opacity;
-  }
-
-  #panel1 { z-index: 30; }
-  #panel2 { z-index: 20; }
-  #panel3 { z-index: 10; }
-
-  .panel-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  /* Regular sections */
-  .content-section {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background: white;
-    z-index: 40;
-  }
-
-  /* Disable scroll-snap on mobile for better UX */
-  @media (max-width: 768px) {
-    #section1, #section2, #section3 {
-      scroll-snap-align: none;
+    body {
+      overscroll-behavior: none;
+      touch-action: manipulation;
     }
-  }
-</style>
+
+    html { 
+      scroll-behavior: smooth;
+    }
+
+    .scroll-section {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .scroll-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+      will-change: transform, opacity;
+    }
+
+    #panel1 { z-index: 30; }
+    #panel2 { z-index: 20; }
+    #panel3 { z-index: 10; }
+
+    .panel-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Regular sections */
+    .content-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background: white; /* Ensure content sections have solid background */
+      z-index: 40; /* Above the scroll panels */
+    }
+  </style>
 </head>
 <body class="bg-white text-gray-800">
   <!-- Header -->
@@ -156,9 +144,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Spacer to enable scroll past fixed panels -->
-   <div style="height: 200vh;"></div>
 
   <!-- Services Section -->
   <section class="content-section relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
@@ -366,74 +351,50 @@
       { element: document.getElementById('panel3'), active: false }
     ];
 
-    const sections = [
-      document.getElementById('section1'),
-      document.getElementById('section2'),
-      document.getElementById('section3')
-    ];
-
     const sectionHeight = window.innerHeight;
-    const totalPanelsHeight = sectionHeight * 3;
+    const transitionThreshold = 0.7; // 70% of section height triggers transition
     let ticking = false;
-    let isScrolling = false;
 
     function updatePanels(scrollPos) {
-      const panel1Pos = scrollPos / sectionHeight;
-      const panel2Pos = (scrollPos - sectionHeight) / sectionHeight;
-      const panel3Pos = (scrollPos - sectionHeight * 2) / sectionHeight;
-
-      // Panel 1 transitions
-      if (panel1Pos <= 0) {
-        panels[0].element.style.transform = 'translateY(0)';
-        panels[0].element.style.opacity = '1';
-      } else {
-        panels[0].element.style.transform = `translateY(-${panel1Pos * 100}%)`;
-        panels[0].element.style.opacity = `${1 - panel1Pos * 0.5}`;
-      }
-
-      // Panel 2 transitions
-      if (panel2Pos <= 0) {
-        panels[1].element.style.transform = `translateY(${Math.abs(panel2Pos) * 100}%)`;
-        panels[1].element.style.opacity = '1';
-      } else {
-        panels[1].element.style.transform = `translateY(-${panel2Pos * 100}%)`;
-        panels[1].element.style.opacity = `${1 - panel2Pos * 0.5}`;
-      }
-
-      // Panel 3 transitions
-      if (panel3Pos <= 0) {
-        panels[2].element.style.transform = `translateY(${Math.abs(panel3Pos) * 100}%)`;
-        panels[2].element.style.opacity = '1';
-      } else {
-        const fadeOut = Math.max(0, 1 - (scrollPos - totalPanelsHeight) / sectionHeight * 0.5);
-        panels[2].element.style.transform = 'translateY(0)';
-        panels[2].element.style.opacity = `${fadeOut}`;
-      }
-    }
-
-    // Handle scroll snapping only for the first three sections
-    function snapToSection() {
-      if (isScrolling) return;
+      const progress = scrollPos / sectionHeight;
       
-      const scrollPos = window.scrollY;
-      
-      // Only snap if we're in the first three sections
-      if (scrollPos < totalPanelsHeight) {
-        const currentSection = Math.round(scrollPos / sectionHeight);
-        const targetPos = currentSection * sectionHeight;
+      // Panel 1 - fades out completely before panel 2 appears
+      if (progress < transitionThreshold) {
+        // Fading out panel 1
+        const fadeOut = 1 - (progress / transitionThreshold);
+        panels[0].element.style.opacity = fadeOut;
+        panels[0].element.style.transform = `translateY(${(1 - fadeOut) * 20}px)`;
+        panels[1].element.style.opacity = '0';
+      } 
+      // Between panel 1 and 2 transition
+      else if (progress >= transitionThreshold && progress < (1 + transitionThreshold)) {
+        // Panel 1 is completely hidden
+        panels[0].element.style.opacity = '0';
         
-        if (Math.abs(scrollPos - targetPos) > 5) {
-          isScrolling = true;
-          window.scrollTo({
-            top: targetPos,
-            behavior: 'smooth'
-          });
-          
-          // Reset flag after scroll completes
-          setTimeout(() => {
-            isScrolling = false;
-          }, 1000);
-        }
+        // Panel 2 fades in
+        const panel2Progress = (progress - transitionThreshold) / (1 - transitionThreshold);
+        panels[1].element.style.opacity = panel2Progress;
+        panels[1].element.style.transform = `translateY(${(1 - panel2Progress) * 20}px)`;
+        
+        // Panel 3 remains hidden
+        panels[2].element.style.opacity = '0';
+      }
+      // Between panel 2 and 3 transition
+      else if (progress >= (1 + transitionThreshold) && progress < (2 + transitionThreshold)) {
+        // Panel 2 fades out
+        const panel2FadeOut = 1 - (progress - (1 + transitionThreshold)) / (1 - transitionThreshold);
+        panels[1].element.style.opacity = panel2FadeOut;
+        panels[1].element.style.transform = `translateY(${(1 - panel2FadeOut) * 20}px)`;
+        
+        // Panel 3 fades in
+        const panel3Progress = (progress - (1 + transitionThreshold)) / (1 - transitionThreshold);
+        panels[2].element.style.opacity = panel3Progress;
+        panels[2].element.style.transform = `translateY(${(1 - panel3Progress) * 20}px)`;
+      }
+      // Past all panels
+      else {
+        panels[2].element.style.opacity = '1';
+        panels[2].element.style.transform = 'translateY(0)';
       }
     }
 
@@ -443,9 +404,6 @@
       if (!ticking) {
         window.requestAnimationFrame(() => {
           updatePanels(scrollPos);
-          if (!isScrolling && scrollPos < totalPanelsHeight) {
-            snapToSection();
-          }
           ticking = false;
         });
         ticking = true;
@@ -454,23 +412,6 @@
 
     // Initialize panels position
     updatePanels(0);
-    
-    // Add scroll-snap-type only when in the first three sections
-    function checkScrollSnap() {
-  const scrollY = window.scrollY;
-
-  if (scrollY < sectionHeight * 2.5) {
-    // Snap only until halfway through panel3
-    document.documentElement.style.scrollSnapType = 'y mandatory';
-  } else {
-    // Disable snap once you're far into panel3
-    document.documentElement.style.scrollSnapType = 'none';
-  }
-}
-
-    
-    window.addEventListener('scroll', checkScrollSnap);
-    checkScrollSnap();
   });
 </script>
 
