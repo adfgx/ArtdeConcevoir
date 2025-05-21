@@ -6,38 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Art de Concevoir</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    function filterProjects(category) {
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-      card.style.display =
-        category === 'all' || card.classList.contains(category)
-          ? 'block'
-          : 'none';
-    });
-  }
-  </script>
-
-  <script>
-  window.addEventListener('scroll', () => {
-    const sections = ['panel1', 'panel2', 'panel3'];
-    const threshold = window.innerHeight * 0.5;
-
-    sections.forEach((id, i) => {
-      const panel = document.getElementById(id);
-      const section = document.getElementById(`section${i + 1}`);
-      const rect = section.getBoundingClientRect();
-
-      if (rect.top < -threshold) {
-        panel.classList.add('fade-out');
-      } else {
-        panel.classList.remove('fade-out');
-      }
-    });
-  });
-</script>
-
-
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
@@ -82,7 +50,7 @@
         height: 100dvh;
       }
     }
-    
+
 </style>
 
 <!--True height-->
@@ -178,6 +146,26 @@
     </div>
   </div>
 </div>
+
+<!--Scroll section fade transitions-->
+<script>
+  window.addEventListener('scroll', () => {
+    const sections = ['panel1', 'panel2', 'panel3'];
+    const threshold = window.innerHeight * 0.5;
+
+    sections.forEach((id, i) => {
+      const panel = document.getElementById(id);
+      const section = document.getElementById(`section${i + 1}`);
+      const rect = section.getBoundingClientRect();
+
+      if (rect.top < -threshold) {
+        panel.classList.add('fade-out');
+      } else {
+        panel.classList.remove('fade-out');
+      }
+    });
+  });
+</script>
       
 
 <!-- Transition Section 3 -->
@@ -347,6 +335,19 @@ style="height: calc(var(--vh, 1vh) * 100); background-image: url('Projets/33/ima
     </div>
   </div>
 </section>
+
+<!-- project card filters -->
+<script>
+    function filterProjects(category) {
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => {
+      card.style.display =
+        category === 'all' || card.classList.contains(category)
+          ? 'block'
+          : 'none';
+    });
+  }
+  </script>
 
   <!-- About -->
   <section id="a-propos" class="bg-gray-50 py-16">
