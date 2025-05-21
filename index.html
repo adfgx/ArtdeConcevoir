@@ -6,6 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Art de Concevoir</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function filterProjects(category) {
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => {
+      card.style.display =
+        category === 'all' || card.classList.contains(category)
+          ? 'block'
+          : 'none';
+    });
+  }
+  </script>
+
+  <script>
+  window.addEventListener('scroll', () => {
+    const sections = ['panel1', 'panel2', 'panel3'];
+    const threshold = window.innerHeight * 0.5;
+
+    sections.forEach((id, i) => {
+      const panel = document.getElementById(id);
+      const section = document.getElementById(`section${i + 1}`);
+      const rect = section.getBoundingClientRect();
+
+      if (rect.top < -threshold) {
+        panel.classList.add('fade-out');
+      } else {
+        panel.classList.remove('fade-out');
+      }
+    });
+  });
+</script>
+
+
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
@@ -44,13 +76,7 @@
     transform: none;
     pointer-events: none;
   }
-  /* Prevent layout shift when mobile UI appears/disappears */
-    @supports (height: 100dvh) {
-      .scroll-section, .scroll-panel {
-        height: 100dvh;
-      }
-    }
-
+  
 </style>
 
 <!--True height-->
@@ -84,20 +110,23 @@
   <!-- Header behaviour -->
   <script>
   let lastScrollY = window.scrollY;
-    const header = document.getElementById('site-header');
+  const header = document.getElementById('site-header');
 
-    window.addEventListener('scroll', () => {
-      if (!header) return;
-      const currentScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (!header) return;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        header.style.transform = 'translateY(-100%)';
-      } else {
-        header.style.transform = 'translateY(0)';
-      }
+    const currentScrollY = window.scrollY;
 
-      lastScrollY = currentScrollY;
-    });
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Scrolling down
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      // Scrolling up
+      header.style.transform = 'translateY(0)';
+    }
+
+    lastScrollY = currentScrollY;
+  });
 </script>
 
 <!-- Scroll Section 1: Hero -->
@@ -143,49 +172,6 @@
     </div>
   </div>
 </div>
-
-<!--Scroll section scripts-->
-<script>
-  window.addEventListener('scroll', () => {
-      const sections = ['panel1', 'panel2', 'panel3'];
-      const threshold = window.innerHeight * 0.5;
-
-      sections.forEach((id, i) => {
-        const panel = document.getElementById(id);
-        const section = document.getElementById(`section${i + 1}`);
-        if (!panel || !section) return;
-
-        const rect = section.getBoundingClientRect();
-        panel.classList.toggle('fade-out', rect.top < -threshold);
-      });
-    });
-</script>
-
-<script>
-  function updatePanelBackgrounds() {
-    const isPortrait = window.innerHeight / window.innerWidth > 1;
-
-    const panel2 = document.getElementById("panel2");
-    const panel3 = document.getElementById("panel3");
-
-    if (panel2) {
-      panel2.style.backgroundImage = isPortrait
-        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
-        : "url('Projets/32/images/16.9/1.jpg')";
-    }
-
-    if (panel3) {
-      panel3.style.backgroundImage = isPortrait
-        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
-        : "url('Projets/1/images/16.9/1.5.jpg')";
-    }
-  }
-
-  // Run on page load
-  window.addEventListener("DOMContentLoaded", updatePanelBackgrounds);
-  // Run on resize or rotation
-  window.addEventListener('load', setViewportHeight);
-</script>
       
 
 <!-- Transition Section 3 -->
@@ -356,19 +342,6 @@ style="height: calc(var(--vh, 1vh) * 100); background-image: url('Projets/33/ima
   </div>
 </section>
 
-<!-- project card filters -->
-<script>
-    function filterProjects(category) {
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-      card.style.display =
-        category === 'all' || card.classList.contains(category)
-          ? 'block'
-          : 'none';
-    });
-  }
-  </script>
-
   <!-- About -->
   <section id="a-propos" class="bg-gray-50 py-16">
     <div class="max-w-4xl mx-auto px-4 text-center">
@@ -415,25 +388,34 @@ function setViewportHeight() {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }, 100); // delay helps avoid excessive recalculations
 }
-// Handle mobile viewport changes
-    function handleViewportChanges() {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-      
-      // Force recalculate panels
-      window.dispatchEvent(new Event('scroll'));
+
+  </script>
+
+  <script>
+  function updatePanelBackgrounds() {
+    const isPortrait = window.innerHeight / window.innerWidth > 1;
+
+    const panel2 = document.getElementById("panel2");
+    const panel3 = document.getElementById("panel3");
+
+    if (panel2) {
+      panel2.style.backgroundImage = isPortrait
+        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
+        : "url('Projets/32/images/16.9/1.jpg')";
     }
 
-    // Set initial viewport height
-    handleViewportChanges();
-    
-    // Only update after resize ends to prevent jank
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(handleViewportChanges, 100);
-    });
-  </script>
+    if (panel3) {
+      panel3.style.backgroundImage = isPortrait
+        ? "url('Projets/1/images/9.16/13be95147b920e7c4ee958ff30db7a11.jpg')"
+        : "url('Projets/1/images/16.9/1.5.jpg')";
+    }
+  }
+
+  // Run on page load
+  window.addEventListener("DOMContentLoaded", updatePanelBackgrounds);
+  // Run on resize or rotation
+  window.addEventListener('load', setViewportHeight);
+</script>
 
 </body>
 </html>
