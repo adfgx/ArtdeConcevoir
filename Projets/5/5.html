@@ -346,74 +346,56 @@
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const panels = [
-      { element: document.getElementById('panel1'), active: true },
-      { element: document.getElementById('panel2'), active: false },
-      { element: document.getElementById('panel3'), active: false }
+      { element: document.getElementById('panel1'), threshold: 0.7 },
+      { element: document.getElementById('panel2'), threshold: 1.7 },
+      { element: document.getElementById('panel3'), threshold: 2.7 }
     ];
+    
+    // Initialize all panels except first as hidden
+    panels.forEach((panel, index) => {
+      if (index > 0) {
+        panel.element.style.opacity = '0';
+        panel.element.style.transform = 'translateY(20px)';
+      }
+    });
 
-    const sectionHeight = window.innerHeight;
-    const transitionThreshold = 0.7; // 70% of section height triggers transition
-    let ticking = false;
+    function updatePanels() {
+      const scrollPos = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const scrollProgress = scrollPos / viewportHeight;
 
-    function updatePanels(scrollPos) {
-      const progress = scrollPos / sectionHeight;
-      
-      // Panel 1 - fades out completely before panel 2 appears
-      if (progress < transitionThreshold) {
-        // Fading out panel 1
-        const fadeOut = 1 - (progress / transitionThreshold);
-        panels[0].element.style.opacity = fadeOut;
-        panels[0].element.style.transform = `translateY(${(1 - fadeOut) * 20}px)`;
-        panels[1].element.style.opacity = '0';
-      } 
-      // Between panel 1 and 2 transition
-      else if (progress >= transitionThreshold && progress < (1 + transitionThreshold)) {
-        // Panel 1 is completely hidden
-        panels[0].element.style.opacity = '0';
-        
-        // Panel 2 fades in
-        const panel2Progress = (progress - transitionThreshold) / (1 - transitionThreshold);
-        panels[1].element.style.opacity = panel2Progress;
-        panels[1].element.style.transform = `translateY(${(1 - panel2Progress) * 20}px)`;
-        
-        // Panel 3 remains hidden
-        panels[2].element.style.opacity = '0';
-      }
-      // Between panel 2 and 3 transition
-      else if (progress >= (1 + transitionThreshold) && progress < (2 + transitionThreshold)) {
-        // Panel 2 fades out
-        const panel2FadeOut = 1 - (progress - (1 + transitionThreshold)) / (1 - transitionThreshold);
-        panels[1].element.style.opacity = panel2FadeOut;
-        panels[1].element.style.transform = `translateY(${(1 - panel2FadeOut) * 20}px)`;
-        
-        // Panel 3 fades in
-        const panel3Progress = (progress - (1 + transitionThreshold)) / (1 - transitionThreshold);
-        panels[2].element.style.opacity = panel3Progress;
-        panels[2].element.style.transform = `translateY(${(1 - panel3Progress) * 20}px)`;
-      }
-      // Past all panels
-      else {
-        panels[2].element.style.opacity = '1';
-        panels[2].element.style.transform = 'translateY(0)';
-      }
+      panels.forEach((panel, index) => {
+        if (scrollProgress >= panel.threshold - 0.7 && scrollProgress < panel.threshold) {
+          // Entering the panel's threshold
+          const progress = (scrollProgress - (panel.threshold - 0.7)) / 0.7;
+          panel.element.style.opacity = progress;
+          panel.element.style.transform = `translateY(${20 * (1 - progress)}px)`;
+          
+          // Fade out previous panel if exists
+          if (index > 0) {
+            const prevPanel = panels[index - 1];
+            prevPanel.element.style.opacity = 1 - progress;
+            prevPanel.element.style.transform = `translateY(${20 * progress}px)`;
+          }
+        }
+      });
     }
 
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY;
-      
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          updatePanels(scrollPos);
+          updatePanels();
           ticking = false;
         });
         ticking = true;
       }
     });
 
-    // Initialize panels position
-    updatePanels(0);
+    // Initialize on load
+    updatePanels();
   });
-</script>
+  </script>
 
   <!-- AOS script -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
