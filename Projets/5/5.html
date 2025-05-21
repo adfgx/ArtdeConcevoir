@@ -351,18 +351,17 @@
       { element: document.getElementById('panel3'), threshold: 2.7 }
     ];
     
-    // Initialize all panels except first as hidden
-    panels.forEach((panel, index) => {
-      if (index > 0) {
-        panel.element.style.opacity = '0';
-        panel.element.style.transform = 'translateY(20px)';
-      }
-    });
+    // Initialize panel1 to be fully visible immediately
+    panels[0].element.style.opacity = '1';
+    panels[0].element.style.transform = 'translateY(0)';
 
     function updatePanels() {
       const scrollPos = window.scrollY;
       const viewportHeight = window.innerHeight;
       const scrollProgress = scrollPos / viewportHeight;
+
+      // Calculate the position where services section starts (after all panels)
+      const servicesStart = 3 * viewportHeight;
 
       panels.forEach((panel, index) => {
         if (scrollProgress >= panel.threshold - 0.7 && scrollProgress < panel.threshold) {
@@ -379,6 +378,11 @@
           }
         }
       });
+
+      // Adjust the services section position to ensure all panels are visible
+      if (scrollPos >= servicesStart - viewportHeight * 0.5) {
+        document.querySelector('.content-section').style.marginTop = `${servicesStart}px`;
+      }
     }
 
     let ticking = false;
