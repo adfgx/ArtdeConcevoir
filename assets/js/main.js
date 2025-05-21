@@ -248,13 +248,3 @@
 			._parallax();
 
 })(jQuery);
-// Projects filtering
-function filterProjects(category) {
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-      card.style.display =
-        category === 'all' || card.classList.contains(category)
-          ? 'block'
-          : 'none';
-    });
-  }
