@@ -180,12 +180,12 @@ style="height: 100vh; background-image: url('https://raw.githubusercontent.com/a
   </div>
 </section>
 
-  <<!-- Replace the Featured Projects section with this updated version -->
+  <!-- Replace the Featured Projects section with this fully responsive version -->
 <section id="projets" class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Nos Projets</h2>
     
-    <!-- Updated Image Carousel for 16:9 images -->
+    <!-- Responsive Image Carousel -->
     <div class="pic-ctn">
       <a href="Projets/1/1.html" target="_blank">
         <img src="https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/1/images/16.9/1.jpg" 
@@ -207,7 +207,7 @@ style="height: 100vh; background-image: url('https://raw.githubusercontent.com/a
     <style>
       @keyframes display {
         0% {
-          transform: translateX(200px);
+          transform: translateX(100vw);
           opacity: 0;
         }
         10% {
@@ -219,47 +219,50 @@ style="height: 100vh; background-image: url('https://raw.githubusercontent.com/a
           opacity: 1;
         }
         30% {
-          transform: translateX(-200px);
+          transform: translateX(-100vw);
           opacity: 0;
         }
         100% {
-          transform: translateX(-200px);
+          transform: translateX(-100vw);
           opacity: 0;
         }
       }
 
       .pic-ctn {
         position: relative;
-        width: 100%;
-        height: 400px; /* Increased height for 16:9 */
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio (9/16 = 0.5625) */
+        max-height: 500px;
         margin: 2rem auto;
-        max-width: 800px; /* Limits maximum width */
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       .pic-ctn > a {
         position: absolute;
         top: 0;
-        left: calc(50% - 300px); /* Adjusted for wider images */
-        display: inline-block;
-        width: 600px; /* 16:9 width */
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
       }
 
       .pic-ctn > a > img {
         width: 100%;
-        height: 337.5px; /* 600 * 9/16 = 337.5 (16:9 ratio) */
+        height: 100%;
         object-fit: cover;
         position: static;
         opacity: 0;
         animation: display 10s infinite;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease; /* Smooth hover effect */
+        transition: transform 0.3s ease;
       }
 
-      /* Hover effect */
-      .pic-ctn > a:hover > img {
-        transform: scale(1.02);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      /* Hover effect - only on non-touch devices */
+      @media (hover: hover) {
+        .pic-ctn > a:hover > img {
+          transform: scale(1.02);
+        }
       }
 
       /* Animation delays */
@@ -279,30 +282,19 @@ style="height: 100vh; background-image: url('https://raw.githubusercontent.com/a
         animation-delay: 8s;
       }
 
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
+      /* Desktop adjustments */
+      @media (min-width: 768px) {
         .pic-ctn {
-          height: 300px;
-        }
-        .pic-ctn > a {
-          left: calc(50% - 150px);
-          width: 300px;
-        }
-        .pic-ctn > a > img {
-          height: 168.75px; /* 300 * 9/16 */
+          width: 80vw;
+          height: 45vw; /* 80 * 0.5625 */
+          max-height: 600px;
         }
       }
 
-      @media (max-width: 480px) {
+      @media (min-width: 1024px) {
         .pic-ctn {
-          height: 250px;
-        }
-        .pic-ctn > a {
-          left: calc(50% - 125px);
-          width: 250px;
-        }
-        .pic-ctn > a > img {
-          height: 140.625px; /* 250 * 9/16 */
+          width: 70vw;
+          height: 39.375vw; /* 70 * 0.5625 */
         }
       }
     </style>
