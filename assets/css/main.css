@@ -3107,7 +3107,7 @@ input, select, textarea {
 
 		.spotlight.top .content, .spotlight.bottom .content {
 			left: 0;
-			padding: 5.1em 0 3.1em 0;
+			padding: 1em;
 			width: 100%;
 		}
 
@@ -3148,6 +3148,9 @@ input, select, textarea {
 
 		.spotlight.style3 .content {
 			border-color: #39c088;
+		}
+		.spotlight.style4 .content{
+			border-color: #c0a739;
 		}
 
 		.spotlight.inactive .content {
