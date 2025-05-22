@@ -6,15 +6,10 @@
     <a href="https://example.com/page5" target="_blank"><img src="https://picsum.photos/200/300?t=5" alt="" class="pic"></a>
 </div>
 
-  <style>
+<style>
 html, body {
   margin: 0;
   padding: 0;
-}
-
-.pic-ctn {
-  width: 100vw;
-  height: 200px;
 }
 
 @keyframes display {
@@ -47,37 +42,33 @@ html, body {
   margin-top: 15vh;
 }
 
-.pic-ctn > img {
-  position: absolute;
-  top: 0;
-  left: calc(50% - 100px);
-  opacity: 0;
-  animation: display 10s infinite;
-}
-
-img:nth-child(2) {
-  animation-delay: 2s;
-}
-img:nth-child(3) {
-  animation-delay: 4s;
-}
-img:nth-child(4) {
-  animation-delay: 6s;
-}
-img:nth-child(5) {
-  animation-delay: 8s;
-}
 .pic-ctn > a {
   position: absolute;
   top: 0;
   left: calc(50% - 100px);
-  display: inline-block; /* This ensures the link wraps the image properly */
+  display: inline-block;
 }
 
 .pic-ctn > a > img {
-  position: static; /* Remove the absolute positioning from the image */
+  position: static;
   opacity: 0;
   animation: display 10s infinite;
 }
-  </style>
-  
+
+/* Updated selectors to target the <a> tags */
+.pic-ctn > a:nth-child(1) > img {
+  animation-delay: 0s;
+}
+.pic-ctn > a:nth-child(2) > img {
+  animation-delay: 2s;
+}
+.pic-ctn > a:nth-child(3) > img {
+  animation-delay: 4s;
+}
+.pic-ctn > a:nth-child(4) > img {
+  animation-delay: 6s;
+}
+.pic-ctn > a:nth-child(5) > img {
+  animation-delay: 8s;
+}
+</style>
