@@ -52,7 +52,7 @@
 
   .scroll-section {
     position: relative;
-    height: var(--vh, 100vh);
+    height: 100vh;
     width: 100%;
     overflow: hidden;
   }
@@ -62,7 +62,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100vh;
     transition: opacity 1s ease, transform 1s ease;
     pointer-events: auto;
   }
@@ -79,17 +79,7 @@
 </style>
 
 <!--True height-->
-<script>
-  function setViewportHeight() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
 
-  // Set on load
-  window.addEventListener('load', setViewportHeight);
-  // Update on resize or orientation change
-  window.addEventListener('resize', setViewportHeight);
-</script>
 
 </head>
 <body class="bg-white text-gray-800 scroll-smooth">
@@ -129,7 +119,7 @@
 </script>
 
 <!-- Scroll Section 1: Hero -->
-<div class="scroll-section" style="height: calc(var(--vh, 1vh) * 100);" id="section1">
+<div class="scroll-section" style="height: 100vh;" id="section1">
   <div id="panel1" class="scroll-panel bg-cover bg-center bg-no-repeat flex items-center justify-center text-white" 
   style="background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/1/images/16.9/1.jpg');">
     <div class="bg-black bg-opacity-60 absolute inset-0"></div>
@@ -141,7 +131,7 @@
 </div>
 
 <!-- Scroll Section 2: Notre philosophie -->
-<div class="scroll-section" style="height: calc(var(--vh, 1vh) * 100);" id="section2">
+<div class="scroll-section" style="height: 100vh;" id="section2">
   <div id="panel2" class="scroll-panel bg-cover bg-center bg-no-repeat flex items-end text-white">
     <div class="bg-black bg-opacity-50 absolute inset-0"></div>
     <div class="relative z-10 p-10 md:p-20 max-w-3xl ml-auto text-right" data-aos="fade-up">
@@ -154,7 +144,7 @@
 </div>
 
 <!-- Scroll Section 3: Expertise -->
-<div class="scroll-section" style="height: calc(var(--vh, 1vh) * 100);" id="section3">
+<div class="scroll-section" style="height: 100vh;" id="section3">
   <div id="panel3" class="scroll-panel bg-cover bg-center bg-no-repeat flex items-start text-white">
     <div class="bg-black bg-opacity-50 absolute inset-0"></div>
     <div class="relative z-10 p-10 md:p-20 max-w-3xl" data-aos="fade-up">
@@ -175,7 +165,7 @@
 
 <!-- Transition Section 3 -->
 <section class="relative bg-cover bg-center bg-no-repeat flex items-center justify-center text-white"
-style="height: calc(var(--vh, 1vh) * 100); background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/33/images/16.9/1.5.jpg');">
+style="height: 100vh; background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/33/images/16.9/1.5.jpg');">
   <div class="bg-black bg-opacity-40 absolute inset-0"></div>
   <div class="relative z-10 max-w-2xl text-center" data-aos="fade-up">
     <h2 class="text-3xl md:text-4xl font-bold mb-4">Services</h2>
@@ -379,12 +369,7 @@ style="height: calc(var(--vh, 1vh) * 100); background-image: url('https://raw.gi
       easing: 'ease-in-out',
     });
 
-    let vhTimeout;
-function setViewportHeight() {
-  clearTimeout(vhTimeout);
-  vhTimeout = setTimeout(() => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
   }, 100); // delay helps avoid excessive recalculations
 }
 
