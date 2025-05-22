@@ -1,11 +1,11 @@
 <div class="pic-ctn">
-    <img src="https://picsum.photos/200/300?t=1" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=2" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=3" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=4" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=5" alt="" class="pic">
-  </div>
-  
+    <a href="https://example.com/page1" target="_blank"><img src="https://picsum.photos/200/300?t=1" alt="" class="pic"></a>
+    <a href="https://example.com/page2" target="_blank"><img src="https://picsum.photos/200/300?t=2" alt="" class="pic"></a>
+    <a href="https://example.com/page3" target="_blank"><img src="https://picsum.photos/200/300?t=3" alt="" class="pic"></a>
+    <a href="https://example.com/page4" target="_blank"><img src="https://picsum.photos/200/300?t=4" alt="" class="pic"></a>
+    <a href="https://example.com/page5" target="_blank"><img src="https://picsum.photos/200/300?t=5" alt="" class="pic"></a>
+</div>
+
   <style>
 html, body {
   margin: 0;
@@ -66,6 +66,18 @@ img:nth-child(4) {
 }
 img:nth-child(5) {
   animation-delay: 8s;
+}
+.pic-ctn > a {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 100px);
+  display: inline-block; /* This ensures the link wraps the image properly */
+}
+
+.pic-ctn > a > img {
+  position: static; /* Remove the absolute positioning from the image */
+  opacity: 0;
+  animation: display 10s infinite;
 }
   </style>
   
