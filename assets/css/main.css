@@ -2223,6 +2223,7 @@ input, select, textarea {
 	input[type="email"],
 	input[type="name"],
 	input[type="phone"],
+	input[type="message"],
 	select,
 	textarea {
 		-moz-appearance: none;
@@ -2249,6 +2250,7 @@ input, select, textarea {
 		input[type="email"]:invalid,
 		input[type="name"]:invalid,
 		input[type="phone"]:invalid,
+		input[type="message"]:invalid,
 		select:invalid,
 		textarea:invalid {
 			box-shadow: none;
@@ -2259,6 +2261,7 @@ input, select, textarea {
 		input[type="email"]:focus,
 		input[type="name"]:focus,
 		input[type="phone"]:focus,
+		input[type="message"]:focus,
 		select:focus,
 		textarea:focus {
 			border-color: #e44c65;
@@ -2292,6 +2295,7 @@ input, select, textarea {
 	input[type="email"],
 	input[type="name"],
 	input[type="phone"],
+	input[type="message"],
 	select {
 		height: 3em;
 	}
@@ -3219,6 +3223,7 @@ input, select, textarea {
 			.wrapper.style2 input[type="password"]:focus,
 			.wrapper.style2 input[type="email"]:focus,
 			.wrapper.style2 input[type="name"]:focus,
+			.wrapper.style2 input[type="message"]:focus,
 			.wrapper.style2 input[type="phone"]:focus,
 			.wrapper.style2 select:focus,
 			.wrapper.style2 textarea:focus {
