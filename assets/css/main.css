@@ -3222,10 +3222,6 @@ input, select, textarea {
 
 		.wrapper.style2 {
 			background: #e44c65;
-			background-image: url('https://raw.githubusercontent.com/adfgx/ArtdeConcevoir/refs/heads/main/Projets/23/images/16.9/7.jpg');
-			background-position: center;
-			background-size: cover;
-			height: 100vh;
 		}
 
 			.wrapper.style2 input[type="text"]:focus,
