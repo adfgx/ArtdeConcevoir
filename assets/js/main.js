@@ -218,8 +218,8 @@
 				on = function() {
 
 					$this.scrollex({
-						top:		250,
-						bottom:		0,
+						top:		500,
+						bottom:		250,
 						initialize:	function(t) { $this.addClass('inactive'); },
 						terminate:	function(t) { $this.removeClass('inactive'); },
 						enter:		function(t) { $this.removeClass('inactive'); },
