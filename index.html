@@ -157,12 +157,31 @@
 							<h2>Contact</h2>
 							<p>Vous avez un projet? Parlons-en.</p>
 						</header>
-						<form action="https://formspree.io/f/mdkgrkkv" method="POST" class="space-y-4 text-left" data-aos="slide-up" data-aos-delay="200">
-  <input type="text" name="name" placeholder="Nom" required class="w-full border p-3 rounded-md">
-  <input type="tel" name="phone" placeholder="Téléphone" class="w-full border p-3 rounded-md">
-  <input type="email" name="email" placeholder="Courriel" required class="w-full border p-3 rounded-md">
-  <textarea name="message" rows="5" placeholder="Message" required class="w-full border p-3 rounded-md"></textarea>
-  <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">Envoyer</button>
+						<form action="https://formspree.io/f/mdkgrkkv" method="POST" style="max-width: 500px; margin: 0 auto;">
+  <div style="margin-bottom: 15px;">
+    <input type="text" name="name" placeholder="Nom" required 
+           style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
+  
+  <div style="margin-bottom: 15px;">
+    <input type="tel" name="phone" placeholder="Téléphone" 
+           style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <input type="email" name="email" placeholder="Courriel" required 
+           style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <textarea name="message" rows="5" placeholder="Message" required 
+              style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+  </div>
+
+  <button type="submit" 
+          style="background-color: #2563eb; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
+    Envoyer
+  </button>
 </form>
 					</div>
 				</section>
