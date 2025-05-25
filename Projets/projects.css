@@ -1,125 +1,102 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-
-body {
-	color: #fff;
-	background-color: #021417;
-}
-
-.container {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	align-content: stretch;
-	min-height: 100vh;
-	width: 100%;
-	max-width: 900px;
-	margin: 0 auto;
-}
-
-.c-header {
-	display: block;
-	width: 100%;
+/* Projects Carousel Styles */
+.container-projects {
+    width: 100%;
+    margin: 2em auto;
 }
 
 .u-a5 {
-	font-family: Arial;
-	font-size: 37px;
-	line-height: 35px;
-	letter-spacing: 5px;
-	text-transform: uppercase;
-	font-weight: 700;
-	text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-	color: #fff;
+    font-family: "Roboto", Helvetica, sans-serif;
+    font-size: 2em;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #fff;
+    margin: 0.5em 0;
 }
 
 .u-b4 {
-	font-family: Arial;
-	font-size: 12px;
-	line-height: 17px;
-	letter-spacing: 0.3px;
-	font-weight: normal;
-	color: #fff;
+    font-family: "Roboto", Helvetica, sans-serif;
+    font-size: 0.8em;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+    font-weight: 100;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
 }
 
-a {
-	text-decoration: none;
+/* Carousel Container */
+.c-mouse-vertical-carousel {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
-.u-media-wrapper {
-	position: relative;
-	width: 100%;
-	background-size: cover;
-	background-position: center;
-	height: 0;
+.c-mouse-vertical-carousel__list {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 
-	&#{&}--16-9 {
-		padding-bottom: percentage(9/16);
-	}
+.c-mouse-vertical-carousel__list-item {
+    padding: 1.5em 0;
+    padding-left: 15%;
+    transition: all 0.3s ease;
+}
+
+.c-mouse-vertical-carousel__list-item a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.c-mouse-vertical-carousel__eyebrow {
+    position: relative;
+    margin-bottom: 0.5em;
+}
+
+.c-mouse-vertical-carousel__eyebrow span {
+    position: absolute;
+    left: -2em;
+    top: 0;
+}
+
+.c-mouse-vertical-carousel__bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: scale(1.05);
+}
+
+.c-mouse-vertical-carousel__bg-img.is-visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .c-gradient-overlay {
-	position: absolute;
-	display: block;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background-image: radial-gradient(
-		circle at 49% 50%,
-		rgba(2, 21, 25, 0.3),
-		rgba(2, 21, 25, 0.6)
-	);
-}
-
-.c-mouse-vertical-carousel {
-	position: relative;
-	overflow: hidden;
-
-	&__list {
-		width: 100%;
-		position: absolute;
-		left: 0;
-		top: 50%;
-		z-index: 1;
-	}
-
-	&__list-item {
-		a {
-			display: block;
-			padding-bottom: 25px;
-			padding-top: 25px;
-			padding-left: percentage(13/24);
-		}
-	}
-
-	&__eyebrow {
-		position: relative;
-		padding-bottom: 12px;
-
-		span {
-			position: absolute;
-			left: -30px;
-			top: 2px;
-		}
-	}
-
-	&__title {
-		max-width: 450px;
-	}
-
-	&__bg-img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-size: cover;
-		background-position: center;
-		will-change: transform;
-	}
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        rgba(28, 29, 38, 0.3),
+        rgba(28, 29, 38, 0.8)
+    );
+    z-index: 1;
 }
