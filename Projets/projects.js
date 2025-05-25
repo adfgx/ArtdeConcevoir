@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', function() {
 class VerticalMouseDrivenCarousel {
 	constructor(options = {}) {
 		const _defaults = {
@@ -34,12 +35,12 @@ class VerticalMouseDrivenCarousel {
 	}
 
 	init() {
-		TweenMax.set(this.getBgImgs(), {
+		gsap.set(this.getBgImgs(), {
 			autoAlpha: 0,
 			scale: 1.05
 		});
 
-		TweenMax.set(this.getBgImgs()[0], {
+		gsap.set(this.getBgImgs()[0], {
 			autoAlpha: 1,
 			scale: 1
 		});
@@ -59,7 +60,7 @@ class VerticalMouseDrivenCarousel {
 				this.posY = event.pageY - this.getCarousel().offsetTop;
 				let offset = (-this.posY / carouselHeight) * listHeight;
 
-				TweenMax.to(this.getList(), 0.3, {
+				gsap.to(this.getList(), 0.3, {
 					y: offset,
 					ease: Power4.easeOut
 				});
@@ -75,11 +76,11 @@ class VerticalMouseDrivenCarousel {
 
 				this.listOpacityController(currentId);
 
-				TweenMax.to(ev.currentTarget, 0.3, {
+				gsap.to(ev.currentTarget, 0.3, {
 					autoAlpha: 1
 				});
 
-				TweenMax.to(".is-visible", 0.2, {
+				gsap.to(".is-visible", 0.2, {
 					autoAlpha: 0,
 					scale: 1.05
 				});
@@ -88,7 +89,7 @@ class VerticalMouseDrivenCarousel {
 					this.getBgImgs()[currentId].classList.add("is-visible");
 				}
 
-				TweenMax.to(this.getBgImgs()[currentId], 0.6, {
+				gsap.to(this.getBgImgs()[currentId], 0.6, {
 					autoAlpha: 1,
 					scale: 1
 				});
@@ -105,7 +106,7 @@ class VerticalMouseDrivenCarousel {
 			for (let i = 1; i <= aboveCurrent; i++) {
 				let opacity = 0.5 / i;
 				let offset = 5 * i;
-				TweenMax.to(this.getListItems()[id + i], 0.5, {
+				gsap.to(this.getListItems()[id + i], 0.5, {
 					autoAlpha: opacity,
 					x: offset,
 					ease: Power3.easeOut
@@ -117,7 +118,7 @@ class VerticalMouseDrivenCarousel {
 			for (let i = 0; i <= belowCurrent; i++) {
 				let opacity = 0.5 / i;
 				let offset = 5 * i;
-				TweenMax.to(this.getListItems()[id - i], 0.5, {
+				gsap.to(this.getListItems()[id - i], 0.5, {
 					autoAlpha: opacity,
 					x: offset,
 					ease: Power3.easeOut
@@ -126,5 +127,5 @@ class VerticalMouseDrivenCarousel {
 		}
 	}
 }
-
 new VerticalMouseDrivenCarousel();
+});

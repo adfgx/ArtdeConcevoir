@@ -123,3 +123,12 @@ a {
 	background-position: center;
 	will-change: transform;
 }
+.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.c-mouse-vertical-carousel__bg-img {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
