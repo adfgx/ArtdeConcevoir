@@ -1,148 +1,130 @@
 class VerticalMouseDrivenCarousel {
-    constructor(options = {}) {
-        const defaults = {
-            carousel: ".js-carousel",
-            bgImg: ".js-carousel-bg-img",
-            list: ".js-carousel-list",
-            listItem: ".js-carousel-list-item"
-        };
+	constructor(options = {}) {
+		const _defaults = {
+			carousel: ".js-carousel",
+			bgImg: ".js-carousel-bg-img",
+			list: ".js-carousel-list",
+			listItem: ".js-carousel-list-item"
+		};
 
-        this.config = Object.assign({}, defaults, options);
-        this.posY = 0;
-        this.init();
-    }
+		this.posY = 0;
 
-    getElements() {
-        this.carousel = document.querySelector(this.config.carousel);
-        this.bgImgs = document.querySelectorAll(this.config.bgImg);
-        this.listItems = document.querySelectorAll(this.config.listItem);
-        this.list = document.querySelector(this.config.list);
-    }
+		this.defaults = Object.assign({}, _defaults, options);
 
-    init() {
-        this.getElements();
-        this.setupEventListeners();
-        this.activateFirstItem();
-    }
+		this.initCursor();
+		this.init();
+		this.bgImgController();
+	}
 
-    setupEventListeners() {
-        // Mouse move event
-        this.carousel.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        
-        // Mouse enter events for list items
-        this.listItems.forEach(item => {
-            item.addEventListener('mouseenter', (e) => this.handleItemHover(e));
-        });
-    }
+	//region getters
+	getBgImgs() {
+		return document.querySelectorAll(this.defaults.bgImg);
+	}
 
-    activateFirstItem() {
-        // Activate first item by default
-        if (this.bgImgs.length > 0) {
-            this.bgImgs[0].classList.add('is-visible');
-        }
-        if (this.listItems.length > 0) {
-            this.listItems[0].style.opacity = 1;
-        }
-    }
+	getListItems() {
+		return document.querySelectorAll(this.defaults.listItem);
+	}
 
-    handleMouseMove(e) {
-        const carouselRect = this.carousel.getBoundingClientRect();
-        this.posY = e.clientY - carouselRect.top;
-        const carouselHeight = carouselRect.height;
-        const listHeight = this.list.scrollHeight;
-        
-        // Calculate offset based on mouse position
-        const offset = -this.posY / carouselHeight * (listHeight - carouselHeight);
-        
-        // Animate list position
-        gsap.to(this.list, {
-            y: offset,
-            duration: 0.3,
-            ease: "power2.out"
-        });
-    }
+	getList() {
+		return document.querySelector(this.defaults.list);
+	}
 
-    handleItemHover(e) {
-        const currentId = parseInt(e.currentTarget.dataset.itemId);
-        
-        // Update background image
-        this.updateBackground(currentId);
-        
-        // Update list item opacities
-        this.updateListItems(currentId);
-    }
+	getCarousel() {
+		return document.querySelector(this.defaults.carousel);
+	}
 
-    updateBackground(currentId) {
-        // Hide all background images
-        gsap.to(this.bgImgs, {
-            autoAlpha: 0,
-            scale: 1.05,
-            duration: 0.2
-        });
-        
-        // Show current background image
-        if (this.bgImgs[currentId]) {
-            this.bgImgs[currentId].classList.add('is-visible');
-            gsap.to(this.bgImgs[currentId], {
-                autoAlpha: 1,
-                scale: 1,
-                duration: 0.6
-            });
-        }
-    }
+	init() {
+		TweenMax.set(this.getBgImgs(), {
+			autoAlpha: 0,
+			scale: 1.05
+		});
 
-    updateListItems(currentId) {
-        const totalItems = this.listItems.length;
-        
-        // Reset all items first
-        gsap.to(this.listItems, {
-            autoAlpha: 0.5,
-            x: 0,
-            duration: 0.5,
-            ease: "power3.out"
-        });
-        
-        // Highlight current item
-        gsap.to(this.listItems[currentId], {
-            autoAlpha: 1,
-            x: 0,
-            duration: 0.5,
-            ease: "power3.out"
-        });
-        
-        // Animate items below current
-        for (let i = 1; i < totalItems - currentId; i++) {
-            const item = this.listItems[currentId + i];
-            if (item) {
-                const opacity = 0.5 / i;
-                const offset = 5 * i;
-                gsap.to(item, {
-                    autoAlpha: opacity,
-                    x: offset,
-                    duration: 0.5,
-                    ease: "power3.out"
-                });
-            }
-        }
-        
-        // Animate items above current
-        for (let i = 1; i <= currentId; i++) {
-            const item = this.listItems[currentId - i];
-            if (item) {
-                const opacity = 0.5 / i;
-                const offset = 5 * i;
-                gsap.to(item, {
-                    autoAlpha: opacity,
-                    x: offset,
-                    duration: 0.5,
-                    ease: "power3.out"
-                });
-            }
-        }
-    }
+		TweenMax.set(this.getBgImgs()[0], {
+			autoAlpha: 1,
+			scale: 1
+		});
+
+		this.listItems = this.getListItems().length - 1;
+
+		this.listOpacityController(0);
+	}
+
+	initCursor() {
+		const listHeight = this.getList().clientHeight;
+		const carouselHeight = this.getCarousel().clientHeight;
+
+		this.getCarousel().addEventListener(
+			"mousemove",
+			(event) => {
+				this.posY = event.pageY - this.getCarousel().offsetTop;
+				let offset = (-this.posY / carouselHeight) * listHeight;
+
+				TweenMax.to(this.getList(), 0.3, {
+					y: offset,
+					ease: Power4.easeOut
+				});
+			},
+			false
+		);
+	}
+
+	bgImgController() {
+		for (const link of this.getListItems()) {
+			link.addEventListener("mouseenter", (ev) => {
+				let currentId = ev.currentTarget.dataset.itemId;
+
+				this.listOpacityController(currentId);
+
+				TweenMax.to(ev.currentTarget, 0.3, {
+					autoAlpha: 1
+				});
+
+				TweenMax.to(".is-visible", 0.2, {
+					autoAlpha: 0,
+					scale: 1.05
+				});
+
+				if (!this.getBgImgs()[currentId].classList.contains("is-visible")) {
+					this.getBgImgs()[currentId].classList.add("is-visible");
+				}
+
+				TweenMax.to(this.getBgImgs()[currentId], 0.6, {
+					autoAlpha: 1,
+					scale: 1
+				});
+			});
+		}
+	}
+
+	listOpacityController(id) {
+		id = parseInt(id);
+		let aboveCurrent = this.listItems - id;
+		let belowCurrent = parseInt(id);
+
+		if (aboveCurrent > 0) {
+			for (let i = 1; i <= aboveCurrent; i++) {
+				let opacity = 0.5 / i;
+				let offset = 5 * i;
+				TweenMax.to(this.getListItems()[id + i], 0.5, {
+					autoAlpha: opacity,
+					x: offset,
+					ease: Power3.easeOut
+				});
+			}
+		}
+
+		if (belowCurrent > 0) {
+			for (let i = 0; i <= belowCurrent; i++) {
+				let opacity = 0.5 / i;
+				let offset = 5 * i;
+				TweenMax.to(this.getListItems()[id - i], 0.5, {
+					autoAlpha: opacity,
+					x: offset,
+					ease: Power3.easeOut
+				});
+			}
+		}
+	}
 }
 
-// Initialize the carousel when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new VerticalMouseDrivenCarousel();
-});
+new VerticalMouseDrivenCarousel();
