@@ -50,7 +50,6 @@ a {
 	text-decoration: none;
 }
 
-//MEDIA WRAPPER
 .u-media-wrapper {
 	position: relative;
 	width: 100%;
@@ -63,7 +62,6 @@ a {
 	}
 }
 
-// GRADIENT IMAGE OVERLAY
 .c-gradient-overlay {
 	position: absolute;
 	display: block;
